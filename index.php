@@ -81,7 +81,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <button type="submit" class="filter-btn">Filter</button>
                 </div>
                 <div class="col-md-1">
                     <a href="index.php" class="btn btn-secondary w-100 clear-filters-btn ">Clear filters</a>
@@ -120,14 +120,14 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     <div class="card-body">
                         <h5 class="card-title d-flex justify-content-between align-items-center">
                             <?php echo htmlspecialchars($pet['name']); ?>
-                            <span class="badge bg-primary"><?php echo htmlspecialchars($pet['age']); ?> years</span>
+                            <span class="badge-btn"><?php echo htmlspecialchars($pet['age']); ?> years</span>
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
                         <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
                     </div>
-                    <div class="card-footer bg-transparent border-top-0 text-center">
+                    <div class="card-footer bg-transparent border-top-0 text-center " style="margin-bottom: 10px;;">
                         <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
-                           class="btn btn-primary w-100">Adopt <?php echo htmlspecialchars($pet['name']); ?></a>
+                           class="adoptbtn1">Adopt <?php echo htmlspecialchars($pet['name']); ?></a>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     <div class="container text-center">
         <h2 class="mb-4">Want to Help?</h2>
         <p class="lead mb-4">Have a pet that needs a new home? Help us find them their forever family.</p>
-        <a href="add_pet.php" class="btn btn-success btn-lg">Add a Pet</a>
+        <a href="add_pet.php" class="add-pet-button">Add a Pet</a>
     </div>
 </div>
 
@@ -156,20 +156,52 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .pets1-button{
     text-decoration: none;
     color: white;
-    background-color: black;
+    background-color: #3A6D8C;
     padding: 10px 20px;
     border-radius: 5px;
 }
 .pets1-button:hover{
-    background-color: white;
-    color: black;
+    background-color: #6A9AB0;
+    color: white;
 }
+.adoptbtn1{
+    text-decoration: none;
+    color: white;
+    background-color: #3A6D8C;
+    padding: 10px 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 .hover-shadow:hover {
     transform: translateY(-5px);
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
-
+.badge-btn{
+    text-decoration: none;
+    color: white;
+    background-color: #3A6D8C;
+    padding: 5px 7px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.add-pet-button{
+    text-decoration: none;
+    color: white;
+    background-color: #3A6D8C;
+    padding: 20px 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.add-pet-button:hover{
+    background-color: rgb(0, 31, 63);
+    color: white;
+}
 .transition {
     transition: all 0.3s ease-in-out;
 }
@@ -184,7 +216,19 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     justify-content: flex-start; /* Adjust this as needed */
     gap: 10px; /* Adds spacing between buttons */
 }
-
+.filter-btn{
+    text-decoration: none;
+    color: white;
+    background-color: #6A9AB0;
+    padding: 4px 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border-color: #6A9AB0;
+}
+.filter-btn:hover{
+    background-color: rgb(58, 109, 140);
+    color: white;
+}
 .btn {
     max-width: 150px; /* Set a max width for the button */
     white-space: nowrap; /* Prevent text from wrapping */

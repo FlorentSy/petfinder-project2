@@ -14,3 +14,8 @@ if (isset($_GET['id'])) {
     echo "Invalid pet ID.";
 }
 ?>
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
