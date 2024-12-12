@@ -10,9 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $age = (int)$_POST['age'];
     $description = sanitizeInput($_POST['description']);
     $image = sanitizeInput($_POST['image']);
+    $category = sanitizeInput($_POST['category']); // New category input
 
-    $stmt = $pdo->prepare("INSERT INTO pets (name, breed, age, description, image, available) VALUES (?, ?, ?, ?, ?, 1)");
-    $stmt->execute([$name, $breed, $age, $description, $image]);
+    $stmt = $pdo->prepare("INSERT INTO pets (name, breed, age, description, image, category, available) VALUES (?, ?, ?, ?, ?, ?, 1)");
+    $stmt->execute([$name, $breed, $age, $description, $image, $category]);
 
     // Fetch the newly added pet
     $newPetId = $pdo->lastInsertId();
@@ -38,10 +39,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <p class="card-text">
                                 <strong>Breed:</strong> <?php echo htmlspecialchars($pet['breed']); ?><br>
                                 <strong>Age:</strong> <?php echo htmlspecialchars($pet['age']); ?> years<br>
-                                <strong>Description:</strong> <?php echo htmlspecialchars($pet['description']); ?>
+                                <strong>Description:</strong> <?php echo htmlspecialchars($pet['description']); ?><br>
+                                <strong>Category:</strong> <?php echo htmlspecialchars($pet['category']); ?>
                             </p>
                             <div class="text-center">
-                                <a href="index.php" class="btn btn-primary">View All Pets</a>
+                                <?php 
+                                // Redirect to appropriate page based on category
+                                $redirectPage = match(strtolower($pet['category'])) {
+                                    'cat' => 'cats.php',
+                                    'dog' => 'dogs.php',
+                                    default => 'index.php'
+                                };
+                                ?>
+                                <a href="<?php echo $redirectPage; ?>" class="btn btn-primary">View <?php echo htmlspecialchars($pet['category']); ?>s</a>
                             </div>
                         </div>
                     </div>
@@ -65,11 +75,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="breed" class="form-label">Breed</label>
             <input type="text" class="form-control" id="breed" name="breed" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label for="age" class="form-label">Age</label>
             <input type="number" class="form-control" id="age" name="age" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+        <div class="col-md-4">
             <label for="image" class="form-label">Image URL</label>
             <input type="text" class="form-control" id="image" name="image" value="">
         </div>
