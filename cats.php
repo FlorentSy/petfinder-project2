@@ -49,7 +49,11 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="display-4 fw-bold mb-4">Find Your Perfect Cat Companion</h1>
             <p class="lead mb-4">Give a cat a loving home today. They'll bring joy and warmth to your life..</p>
-            <a href="#available-pets" class="pets1-button" >View Available Cats</a>
+            <a href="#available-pets" class="pets1-button">
+            <img src="cat_pae-removebg-preview.png" alt="" style="width: 100px;">
+            View Available Cats
+            </a>
+
         </div>
     </div>
 </div>
@@ -158,17 +162,38 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 <!-- Add this CSS to your header or stylesheet -->
 <style>
-.pets1-button{
-    text-decoration: none;
-    color: white;
-    background-color: #7E60BF;
-    padding: 10px 20px;
-    border-radius: 5px;
-}
-.pets1-button:hover{
-    background-color:rgb(210, 112, 232);
-    color: white;
-}
+    .pets1-button {
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      font-weight:bold;
+      font-size: 14px;
+      background-color:rgb(106, 79, 163);
+      border-radius: 50%;
+      width: 145px;
+      height: 145px;
+      position: relative;
+      transition: background-color 0.3s ease;
+      
+    }
+
+    .pets1-button:hover {
+      background-color: rgb(210, 112, 232);
+    }
+
+    .pets1-button img {
+      border-radius: 50%;
+      margin: 10px;
+      margin-top: 15px;
+    }
+
+    #available-pets {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+    
 .adoptbtn1{
     text-decoration: none;
     color: white;
@@ -176,7 +201,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     padding: 10px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 17px;
 }
 

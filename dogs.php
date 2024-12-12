@@ -161,18 +161,18 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .pets1-button{
     text-decoration: none;
     color: white;
-    background-color: #3A6D8C;
+    background-color: #80AF81;
     padding: 10px 20px;
     border-radius: 5px;
 }
 .pets1-button:hover{
-    background-color: #6A9AB0;
+    background-color: #1A5319;
     color: white;
 }
 .adoptbtn1{
     text-decoration: none;
     color: white;
-    background-color: #3A6D8C;
+    background-color: #508D4E;
     padding: 10px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -187,7 +187,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .badge-btn{
     text-decoration: none;
     color: white;
-    background-color: #3A6D8C;
+    background-color: #80AF81;
     padding: 5px 7px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -196,7 +196,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .add-pet-button{
     text-decoration: none;
     color: white;
-    background-color: #3A6D8C;
+    background-color: #1A5319;
     padding: 20px 30px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -204,7 +204,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     font-size: 20px;
 }
 .add-pet-button:hover{
-    background-color: rgb(0, 31, 63);
+    background-color: #80AF81;
     color: white;
 }
 .transition {
@@ -224,14 +224,14 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .filter-btn{
     text-decoration: none;
     color: white;
-    background-color: #6A9AB0;
+    background-color: #80AF81;
     padding: 4px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
-    border-color: #6A9AB0;
+    border-color: #80AF81;
 }
 .filter-btn:hover{
-    background-color: rgb(58, 109, 140);
+    background-color:#1A5319;
     color: white;
 }
 .btn {

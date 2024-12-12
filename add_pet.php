@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     default => 'index.php'
                                 };
                                 ?>
-                                <a href="<?php echo $redirectPage; ?>" class="btn btn-primary">View <?php echo htmlspecialchars($pet['category']); ?>s</a>
+                                <a href="<?php echo $redirectPage; ?>" class="btn btn-info">View <?php echo htmlspecialchars($pet['category']); ?>s</a>
                             </div>
                         </div>
                     </div>
@@ -97,11 +97,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Add Pet</button>
+            <button type="submit" class="addpetbtn">Add Pet</button>
         </div>
     </form>
 </div>
-
+<style>
+    .addpetbtn{
+    text-decoration: none;
+    color: white;
+    background-color: #3A6D8C;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border-color:white;
+}
+.addpetbtn:hover{
+    background-color: #6A9AB0;
+    color: white;
+}
+    
+</style>
 <?php
 require 'footer.php';
 ?>
