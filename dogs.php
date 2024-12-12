@@ -176,7 +176,8 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     padding: 10px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 17px;
 }
 
 .hover-shadow:hover {
