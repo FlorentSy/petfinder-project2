@@ -44,7 +44,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="display-4 fw-bold mb-4">Find Your Perfect Companion</h1>
             <p class="lead mb-4">Every pet deserves a loving home. Start your journey here.</p>
-            <a href="#available-pets" class="pets1-button" >View Available Pets</a>
+            <a href="#available-pets" class="pets1-button">View Available Pets</a>
         </div>
     </div>
 </div>
@@ -84,7 +84,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     <button type="submit" class="filter-btn">Filter</button>
                 </div>
                 <div class="col-md-1">
-                    <a href="index.php" class="btn btn-secondary w-100 clear-filters-btn ">Clear filters</a>
+                    <a href="index.php" class="btn btn-secondary w-100 clear-filters-btn">Clear filters</a>
                 </div>
             </form>
         </div>
@@ -120,14 +120,18 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     <div class="card-body">
                         <h5 class="card-title d-flex justify-content-between align-items-center">
                             <?php echo htmlspecialchars($pet['name']); ?>
-                            <span class="badge-btn"><?php echo htmlspecialchars($pet['age']); ?> years</span>
+                            <span class="badge-btn <?php echo strtolower($pet['category']) === 'cat' ? 'cat-badge' : 'dog-badge'; ?>">
+                                <?php echo htmlspecialchars($pet['age']); ?> years
+                            </span>
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
                         <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
                     </div>
-                    <div class="card-footer bg-transparent border-top-0 text-center " style="margin-bottom: 10px;;">
+                    <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
                         <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
-                           class="adoptbtn1">Adopt <?php echo htmlspecialchars($pet['name']); ?></a>
+                           class="adoptbtn1 <?php echo strtolower($pet['category']) === 'cat' ? 'cat-btn' : 'dog-btn'; ?>">
+                           Adopt <?php echo htmlspecialchars($pet['name']); ?>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -153,25 +157,70 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 <!-- Add this CSS to your header or stylesheet -->
 <style>
-.pets1-button{
+.pets1-button {
     text-decoration: none;
     color: white;
     background-color: #3A6D8C;
     padding: 10px 20px;
     border-radius: 5px;
 }
-.pets1-button:hover{
+
+.pets1-button:hover {
     background-color: #6A9AB0;
     color: white;
 }
-.adoptbtn1{
+
+/* Cat styles */
+.adoptbtn1.cat-btn {
     text-decoration: none;
     color: white;
-    background-color: #3A6D8C;
+    background-color: #7E60BF;
     padding: 10px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.badge-btn.cat-badge {
+    text-decoration: none;
+    color: white;
+    background-color: #7E60BF;
+    padding: 5px 7px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Dog styles */
+.adoptbtn1.dog-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #508D4E;
+    padding: 10px 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.badge-btn.dog-badge {
+    text-decoration: none;
+    color: white;
+    background-color: #80AF81;
+    padding: 5px 7px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Hover effects */
+.adoptbtn1.cat-btn:hover {
+    background-color: rgb(210, 112, 232);
+}
+
+.adoptbtn1.dog-btn:hover {
+    background-color: #1A5319;
 }
 
 .hover-shadow:hover {
@@ -179,16 +228,8 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
-.badge-btn{
-    text-decoration: none;
-    color: white;
-    background-color: #3A6D8C;
-    padding: 5px 7px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-.add-pet-button{
+
+.add-pet-button {
     text-decoration: none;
     color: white;
     background-color: #3A6D8C;
@@ -198,25 +239,28 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     font-weight: bold;
     font-size: 20px;
 }
-.add-pet-button:hover{
+
+.add-pet-button:hover {
     background-color: rgb(0, 31, 63);
     color: white;
 }
+
 .transition {
     transition: all 0.3s ease-in-out;
 }
 
 .hero-section {
-    margin-top: -2rem; /* Adjust based on your header height */
+    margin-top: -2rem;
 }
-/* Make sure the parent container uses flex */
+
 .filter-container {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Adjust this as needed */
-    gap: 10px; /* Adds spacing between buttons */
+    justify-content: flex-start;
+    gap: 10px;
 }
-.filter-btn{
+
+.filter-btn {
     text-decoration: none;
     color: white;
     background-color: #6A9AB0;
@@ -225,32 +269,30 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     margin-bottom: 10px;
     border-color: #6A9AB0;
 }
-.filter-btn:hover{
+
+.filter-btn:hover {
     background-color: rgb(58, 109, 140);
     color: white;
 }
+
 .btn {
-    max-width: 150px; /* Set a max width for the button */
-    white-space: nowrap; /* Prevent text from wrapping */
+    max-width: 150px;
+    white-space: nowrap;
 }
 
 .btn-primary {
-    padding-left: 30px; /* Adds space to the left */
-    padding-right: 30px; /* Adds space to the right */
-    font-size: 16px; /* Optional: Adjust the font size to better fit the button */
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
 }
-
-
 
 .clear-filters-btn {
-    white-space: nowrap; /* Ensures the text doesn't wrap */
+    white-space: nowrap;
     font-size: 15px;
-    text-align: left; /* Align text to the left */
-    padding-left: 10px; /* Optional: adjust padding to ensure there's space on the left */
-    padding-right: 10px; /* Optional: adjust padding to control button's width */
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
 }
-
-
 </style>
 
 <?php require 'footer.php'; ?>

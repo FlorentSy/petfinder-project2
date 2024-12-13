@@ -162,6 +162,9 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 <!-- Add this CSS to your header or stylesheet -->
 <style>
+    .card-text{
+        font-size:15px ;
+    }
     .pets1-button {
       display: inline-block;
       text-align: center;

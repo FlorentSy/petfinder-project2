@@ -70,14 +70,18 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     <div class="card-body">
                         <h5 class="card-title d-flex justify-content-between align-items-center">
                             <?php echo htmlspecialchars($pet['name']); ?>
-                            <span class="badge-btn"><?php echo htmlspecialchars($pet['age']); ?> years</span>
+                            <span class="badge-btn <?php echo strtolower($pet['category']) === 'cat' ? 'cat-badge' : 'dog-badge'; ?>">
+                                <?php echo htmlspecialchars($pet['age']); ?> years
+                            </span>
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
                         <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
                     </div>
-                    <div class="card-footer bg-transparent border-top-0 text-center">
+                    <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
                         <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
-                           class="adoptbtn1">Adopt <?php echo htmlspecialchars($pet['name']); ?></a>
+                        class="adoptbtn1 <?php echo strtolower($pet['category']) === 'cat' ? 'cat-btn' : 'dog-btn'; ?>">
+                        Adopt <?php echo htmlspecialchars($pet['name']); ?>
+                        </a>
                     </div>
                 </div>
             </div>
