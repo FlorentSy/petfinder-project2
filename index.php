@@ -3,19 +3,13 @@ require 'config.php';
 require 'utils.php';
 require 'header.php';
 
-// Pagination settings
-$items_per_page = 9;
-$page = isset($_GET['page']) ? (int)sanitizeInput($_GET['page']) : 1;
-$offset = ($page - 1) * $items_per_page;
-
-// Handle search, filters and sorting
+// Handle search and filters
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : '';
 $breed_filter = isset($_GET['breed']) ? sanitizeInput($_GET['breed']) : '';
 $age_filter = isset($_GET['age']) ? sanitizeInput($_GET['age']) : '';
-$sort = isset($_GET['sort']) ? sanitizeInput($_GET['sort']) : 'newest';
 
 // Build the query with filters
-$query = "SELECT SQL_CALC_FOUND_ROWS * FROM pets WHERE available = 1";
+$query = "SELECT * FROM pets WHERE available = 1";
 $params = [];
 
 if (!empty($search)) {
@@ -34,80 +28,19 @@ if (!empty($age_filter)) {
     $params[] = $age_filter;
 }
 
-// Add sorting
-switch ($sort) {
-    case 'age_asc':
-        $query .= " ORDER BY age ASC";
-        break;
-    case 'age_desc':
-        $query .= " ORDER BY age DESC";
-        break;
-    case 'name_asc':
-        $query .= " ORDER BY name ASC";
-        break;
-    case 'oldest':
-        $query .= " ORDER BY created_at ASC";
-        break;
-    case 'newest':
-    default:
-        $query .= " ORDER BY created_at DESC";
-        break;
-}
-
-// Add pagination
-$query .= " LIMIT ? OFFSET ?";
-$params[] = $items_per_page;
-$params[] = $offset;
-
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get total count for pagination
-$total_count = $pdo->query("SELECT FOUND_ROWS()")->fetchColumn();
-$total_pages = ceil($total_count / $items_per_page);
-
 // Get unique breeds for filter
 $breed_stmt = $pdo->query("SELECT DISTINCT breed FROM pets WHERE available = 1");
 $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
-
-// Get user favorites if logged in
-$favorites = [];
-if (isset($_SESSION['user_id'])) {
-    $fav_stmt = $pdo->prepare("SELECT pet_id FROM favorites WHERE user_id = ?");
-    $fav_stmt->execute([$_SESSION['user_id']]);
-    $favorites = $fav_stmt->fetchAll(PDO::FETCH_COLUMN);
-}
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Find your perfect pet companion. Browse our selection of dogs, cats, and other pets available for adoption.">
-    <meta name="keywords" content="pet adoption, adopt pets, dogs, cats, pet shelter">
-    <title>Pet Adoption - Find Your Perfect Companion</title>
-    
-    <meta property="og:title" content="Pet Adoption - Find Your Perfect Companion">
-    <meta property="og:description" content="Browse our selection of pets available for adoption">
-    <meta property="og:image" content="/images/pets-hero.jpg">
-    
-    <link rel="preload" as="image" href="/images/pets-hero.jpg">
-</head>
-<body>
-
-<nav aria-label="breadcrumb" class="container mt-3">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Available Pets</li>
-    </ol>
-</nav>
-
+<!-- Hero Section -->
 <div class="hero-section position-relative mb-5">
-    <div class="hero-image w-100" 
-             role="img" 
-             aria-label="Happy pets background image">
+    <div style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGV0c3x8fHx8fDE2MzY1MjQwMDA&ixlib=rb-1.2.1&q=80&w=1080') center/cover; height: 400px;" 
+         class="w-100">
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="display-4 fw-bold mb-4">Find Your Perfect Companion</h1>
             <p class="lead mb-4">Every pet deserves a loving home. Start your journey here.</p>
@@ -116,74 +49,323 @@ if (isset($_SESSION['user_id'])) {
     </div>
 </div>
 
-<section class="container my-5" aria-label="Pet categories">
+<!-- Category Boxes -->
+<div class="container my-5">
     <div class="row">
         <div class="col-md-4">
             <a href="dogs.php" class="category-box">
-                <i class="category-icon" role="img" aria-label="Dog icon">🐶</i>
+                <img class="category-icon" src="dogicon.png" alt="Dog Icon">
+                
                 <h3>Dogs</h3>
-                <p>Find loyal companions</p>
             </a>
         </div>
         <div class="col-md-4">
-            <a href="cats.php" class="category-box">
-                <i class="category-icon" role="img" aria-label="Cat icon">🐱</i>
+            <a href="cats.php" class="category-box2">
+            <img class="category-icon" src="catlogo3.png" alt="Cat Icon">
                 <h3>Cats</h3>
-                <p>Meet furry friends</p>
             </a>
         </div>
         <div class="col-md-4">
-            <a href="other-pets.php" class="category-box">
-                <i class="category-icon" role="img" aria-label="Paw print icon">🐾</i>
-                <h3>Other Pets</h3>
-                <p>Discover unique companions</p>
+            <a href="otherpets.php" class="category-box">
+                <i class="category-icon">🐾</i>
+                <h3>Other Animals</h3>
             </a>
         </div>
     </div>
-</section>
+</div>
 
-<section class="container mb-5">
+<!-- Featured Pets Section (Keep existing, but with 3-4 small boxes) -->
+<div class="container" id="available-pets">
+    <h2 class="text-center mb-4">Featured Pets</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <!-- 3-4 pet boxes -->
+    </div>
+</div>
+
+
+<!-- Search and Filters -->
+<div class="container mb-5">
     <div class="card shadow-sm">
         <div class="card-body">
-            <form method="GET" class="row g-3" id="filter-form">
-                <div class="col-md-4">
-                    <input type="text" 
-                           name="search" 
-                           class="form-control" 
-                           placeholder="Search pets..." 
-                           value="<?php echo htmlspecialchars($search); ?>"
-                           aria-label="Search pets">
+            <form method="GET" class="row g-3">
+                <div class="col-md-6">
+                    <input type="text" name="search" class="form-control" placeholder="Search pets..." 
+                           value="<?php echo htmlspecialchars($search); ?>">
                 </div>
                 <div class="col-md-2">
-                    <select name="breed" class="form-select" aria-label="Filter by breed">
+                    <select name="breed" class="form-select">
                         <option value="">All Breeds</option>
                         <?php foreach ($breeds as $breed): ?>
-                            <option value="<?php echo htmlspecialchars($breed); ?>" 
-                                    <?php echo $breed_filter === $breed ? 'selected' : ''; ?>>
+                            <option value="<?php echo htmlspecialchars($breed); ?>"
+                                <?php echo $breed_filter === $breed ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($breed); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="age" class="form-select" aria-label="Filter by age">
+                    <select name="age" class="form-select">
                         <option value="">All Ages</option>
                         <?php for($i = 0; $i <= 15; $i++): ?>
-                            <option value="<?php echo $i; ?>" 
-                                    <?php echo $age_filter === (string)$i ? 'selected' : ''; ?>>
+                            <option value="<?php echo $i; ?>"
+                                <?php echo $age_filter === (string)$i ? 'selected' : ''; ?>>
                                 <?php echo $i; ?> years
                             </option>
                         <?php endfor; ?>
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <select name="sort" class="form-select" aria-label="Sort results">
-                        <option value="newest" <?php echo $sort === 'newest' ? 'selected' : ''; ?>>Newest First</option>
-                        <option value="oldest" <?php echo $sort === 'oldest' ? 'selected' : ''; ?>>Oldest First</option>
-                        <option value="age_asc" <?php echo $sort === 'age_asc' ? 'selected' : ''; ?>>Age (Youngest)</option>
-                        <option value="age_desc" <?php echo $sort === 'age_desc' ? 'selected' : ''; ?>>Age (Oldest)</option>
-                        <option value="name_asc" <?php echo $sort === 'name_asc' ? 'selected' : ''; ?>>Name (A-Z)</option>
-                    </select>
+                <div class="col-md-1">
+                    <button type="submit" class="filter-btn">Filter</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit
+                    <a href="index.php" class="btn btn-secondary w-100 clear-filters-btn">Clear filters</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Available Pets Section -->
+<div class="container" id="available-pets">
+    <h2 class="text-center mb-4">Available Pets</h2>
+    
+    <?php if (!empty($search) || !empty($breed_filter) || !empty($age_filter)): ?>
+        <div class="mb-4 text-center">
+            <h5>
+                <?php echo count($pets); ?> pets found
+                <?php if (!empty($search)): ?>
+                    matching "<?php echo htmlspecialchars($search); ?>"
+                <?php endif; ?>
+            </h5>
+            <a href="index.php" class="btn btn-outline-secondary btn-sm">Clear Filters</a>
+        </div>
+    <?php endif; ?>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <?php foreach ($pets as $pet): ?>
+            <div class="col">
+                <div class="card h-100 shadow-sm hover-shadow transition">
+                    <?php if (!empty($pet['image'])): ?>
+                        <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
+                             class="card-img-top" 
+                             alt="<?php echo htmlspecialchars($pet['name']); ?>"
+                             style="height: 250px; object-fit: cover;">
+                    <?php endif; ?>
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                            <?php echo htmlspecialchars($pet['name']); ?>
+                            <span class="badge-btn <?php echo strtolower($pet['category']) === 'cat' ? 'cat-badge' : 'dog-badge'; ?>">
+                                <?php echo htmlspecialchars($pet['age']); ?> years
+                            </span>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
+                        <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
+                        <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
+                           class="adoptbtn1 <?php echo strtolower($pet['category']) === 'cat' ? 'cat-btn' : 'dog-btn'; ?>">
+                           Adopt <?php echo htmlspecialchars($pet['name']); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <?php if (empty($pets)): ?>
+        <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">No Pets Found</h4>
+            <p>We couldn't find any pets matching your criteria. Try adjusting your filters or check back later!</p>
+        </div>
+    <?php endif; ?>
+</div>
+
+
+
+<!-- Call to Action Section -->
+<div class="bg-light py-5 mt-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Want to Help?</h2>
+        <p class="lead mb-4">Have a pet that needs a new home? Help us find them their forever family.</p>
+        <a href="add_pet.php" class="add-pet-button">Add a Pet</a>
+    </div>
+</div>
+
+<!-- Add this CSS to your header or stylesheet -->
+<style>
+.category-icon {
+    width: 150px; /* Adjust as needed */
+    height: 150px;
+    object-fit: contain; /* Ensures the image fits within the given dimensions */
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.category-box {
+    display: block;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.category-box:hover {
+    background-color: #e6e6e6;
+}
+.category-box2 {
+    display: block;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+.category-box2:hover {
+    background-color: #e6e6e6;
+}
+
+.pets1-button {
+    text-decoration: none;
+    color: white;
+    background-color: #3F72AF;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.pets1-button:hover {
+    background-color: #3A6D8C;
+    color: white;
+}
+
+/* Cat styles */
+.adoptbtn1.cat-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #7E60BF;
+    padding: 10px 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.badge-btn.cat-badge {
+    text-decoration: none;
+    color: white;
+    background-color: #7E60BF;
+    padding: 5px 7px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Dog styles */
+.adoptbtn1.dog-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #508D4E;
+    padding: 10px 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.badge-btn.dog-badge {
+    text-decoration: none;
+    color: white;
+    background-color: #80AF81;
+    padding: 5px 7px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Hover effects */
+.adoptbtn1.cat-btn:hover {
+    background-color: rgb(210, 112, 232);
+}
+
+.adoptbtn1.dog-btn:hover {
+    background-color: #1A5319;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.add-pet-button {
+    text-decoration: none;
+    color: white;
+    background-color: #3A6D8C;
+    padding: 20px 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.add-pet-button:hover {
+    background-color: rgb(0, 31, 63);
+    color: white;
+}
+
+.transition {
+    transition: all 0.3s ease-in-out;
+}
+
+.hero-section {
+    margin-top: -2rem;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.filter-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #3F72AF;
+    padding: 4px 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border-color: #3F72AF;
+}
+
+.filter-btn:hover {
+    background-color: rgb(58, 109, 140);
+    color: white;
+}
+
+.btn {
+    max-width: 150px;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
+}
+
+.clear-filters-btn {
+    white-space: nowrap;
+    font-size: 15px;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+</style>
+
+<?php require 'footer.php'; ?>
