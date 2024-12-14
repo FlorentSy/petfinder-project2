@@ -53,10 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 };
                                 ?>
                               <a href="<?php echo $redirectPage; ?>" 
-                                style="background-color: #ff5722; color: white; padding: 10px 20px; border: 2px solid #d84315; border-radius: 8px; text-decoration: none; display: inline-block;" 
-                                class="btn" 
-                                onmouseover="this.style.backgroundColor='#d84315'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" 
-                                onmouseout="this.style.backgroundColor='#ff5722'; this.style.boxShadow='none';">
+                                style="background-color: #FF2E63; color: white; padding: 10px 20px; border: 2px solid black; border-radius: 8px; text-decoration: none; display: inline-block;" 
+                                class="btn">
                                 View <?php echo htmlspecialchars($pet['category']); ?>s
                                 </a>
                             </div>
