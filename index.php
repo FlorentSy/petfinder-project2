@@ -44,11 +44,17 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="display-4 fw-bold mb-4">Find Your Perfect Companion</h1>
             <p class="lead mb-4">Every pet deserves a loving home. Start your journey here.</p>
-            <a href="#available-pets" class="pets1-button">View Available Pets</a>
+            <a href="#available-pets" class="pets1-button">View All Available Pets</a>
         </div>
     </div>
 </div>
-
+<!-- Featured Pets Section (Keep existing, but with 3-4 small boxes) -->
+<div class="container" id="available-pets1">
+    <h2 class="text-center mb-4">Pet Categories</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <!-- 3-4 pet boxes -->
+    </div>
+</div>
 <!-- Category Boxes -->
 <div class="container my-5">
     <div class="row">
@@ -66,7 +72,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
             </a>
         </div>
         <div class="col-md-4">
-            <a href="otherpets.php" class="category-box2">
+            <a href="otherpets.php" class="category-box3">
              <img class="category-icon2" src="othersicon.png" alt="Others Icon">
                 <h3>Other Animals</h3>
             </a>
@@ -74,13 +80,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     </div>
 </div>
 
-<!-- Featured Pets Section (Keep existing, but with 3-4 small boxes) -->
-<div class="container" id="available-pets">
-    <h2 class="text-center mb-4">Featured Pets</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-        <!-- 3-4 pet boxes -->
-    </div>
-</div>
+
 
 
 <!-- Search and Filters -->
@@ -210,7 +210,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 .category-box {
     display: block;
-    background-color: #f1f1f1;
+    background-color: #f1f1f1;;
     border-radius: 8px;
     padding: 20px;
     text-align: center;
@@ -220,7 +220,8 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 .category-box:hover {
-    background-color: #e6e6e6;
+    background-color: white;
+    border: 2px solid #508D4E;
 }
 .category-box2 {
     display: block;
@@ -233,7 +234,22 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     transition: background-color 0.3s;
 }
 .category-box2:hover {
-    background-color: #e6e6e6;
+    background-color: white;
+    border: 2px solid #7E60BF;
+}
+.category-box3 {
+    display: block;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+.category-box3:hover {
+    background-color:white;
+    border: 2px solid #3A6D8C;
 }
 
 .pets1-button {
@@ -242,10 +258,11 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     background-color: #3F72AF;
     padding: 10px 20px;
     border-radius: 5px;
+    font-size: 17px;
 }
 
 .pets1-button:hover {
-    background-color: #3A6D8C;
+    background-color: #27005D;
     color: white;
 }
 
@@ -350,8 +367,9 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 .filter-btn:hover {
-    background-color: rgb(58, 109, 140);
+    background-color: #27005D;
     color: white;
+    border-color: white;
 }
 
 .btn {

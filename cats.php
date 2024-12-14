@@ -207,7 +207,9 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     font-weight: 500;
     font-size: 17px;
 }
-
+.adoptbtn1:hover {
+    background-color: rgb(210, 112, 232);
+}
 .hover-shadow:hover {
     transform: translateY(-5px);
     transition: transform 0.3s ease-in-out;

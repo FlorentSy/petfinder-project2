@@ -132,7 +132,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     </div>
                     <div class="card-footer bg-transparent border-top-0 text-center " style="margin-bottom: 10px;;">
                         <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
-                           class="adoptbtn1">Adopt <?php echo htmlspecialchars($pet['name']); ?></a>
+                        class="adoptbtn1">Adopt <strong><?php echo htmlspecialchars($pet['name']); ?></strong></a>
                     </div>
                 </div>
             </div>
@@ -180,6 +180,9 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     font-size: 17px;
 }
 
+.adoptbtn1:hover {
+    background-color: #1A5319;
+}
 .hover-shadow:hover {
     transform: translateY(-5px);
     transition: transform 0.3s ease-in-out;

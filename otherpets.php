@@ -8,7 +8,7 @@ $breed_filter = isset($_GET['breed']) ? sanitizeInput($_GET['breed']) : '';
 $age_filter = isset($_GET['age']) ? sanitizeInput($_GET['age']) : '';
 
 // Build the query with filters
-$query = "SELECT * FROM pets WHERE available = 1 AND LOWER(category) = 'dog'";
+$query = "SELECT * FROM pets WHERE available = 1 AND LOWER(category) = 'others'";
 $params = [];
 
 if (!empty($search)) {
@@ -27,8 +27,8 @@ if (!empty($age_filter)) {
     $params[] = $age_filter;
 }
 
-// Get unique dog breeds for filter
-$breed_stmt = $pdo->prepare("SELECT DISTINCT breed FROM pets WHERE available = 1 AND LOWER(category) = 'dog'");
+// Get unique pets breeds for filter
+$breed_stmt = $pdo->prepare("SELECT DISTINCT breed FROM pets WHERE available = 1 AND LOWER(category) = 'others'");
 $breed_stmt->execute();
 $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -44,12 +44,12 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 <!-- Hero Section -->
 <div class="hero-section position-relative mb-5">
-    <div style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1444212477490-ca407925329e?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover; height: 400px;" 
+    <div style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1510272839903-5112a2e44bc6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover; height: 400px;" 
          class="w-100">
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-            <h1 class="display-4 fw-bold mb-4">Find Your Perfect DOG Companion</h1>
-            <p class="lead mb-4">Every dog deserves a loving family..</p>
-            <a href="#available-pets" class="pets1-button" >View Available Dogs</a>
+            <h1 class="display-4 fw-bold mb-4">Find Your Furever Friend</h1>
+            <p class="lead mb-4">Every animal deserves a loving home..</p>
+            <a href="#available-pets" class="pets1-button" >View Available Pets</a>
         </div>
     </div>
 </div>
@@ -98,7 +98,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 <!-- Available Pets Section -->
 <div class="container" id="available-pets">
-    <h2 class="text-center mb-4">Available Dogs</h2>
+    <h2 class="text-center mb-4">Available Pets</h2>
     
     <?php if (!empty($search) || !empty($breed_filter) || !empty($age_filter)): ?>
         <div class="mb-4 text-center">
@@ -161,18 +161,20 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .pets1-button{
     text-decoration: none;
     color: white;
-    background-color: #80AF81;
+    background-color: #3B3030;
     padding: 10px 20px;
     border-radius: 5px;
+    border: 1.5px solid white;
+    font-size: 17px;
 }
 .pets1-button:hover{
-    background-color: #1A5319;
+    background-color: #795757;
     color: white;
 }
 .adoptbtn1{
     text-decoration: none;
     color: white;
-    background-color: #508D4E;
+    background-color: #3B3030;
     padding: 10px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -188,7 +190,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .badge-btn{
     text-decoration: none;
     color: white;
-    background-color: #80AF81;
+    background-color: #795757;
     padding: 5px 7px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -197,7 +199,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .add-pet-button{
     text-decoration: none;
     color: white;
-    background-color: #1A5319;
+    background-color: #3B3030;
     padding: 20px 30px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -205,7 +207,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     font-size: 20px;
 }
 .add-pet-button:hover{
-    background-color: #80AF81;
+    background-color: #795757;
     color: white;
 }
 .transition {
@@ -219,21 +221,23 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .filter-container {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Adjust this as needed */
+    justify-content: flex-start; /* Adjust this as needed */ 
     gap: 10px; /* Adds spacing between buttons */
 }
+
 .filter-btn{
     text-decoration: none;
     color: white;
-    background-color: #80AF81;
+    background-color: #3B3030;
     padding: 4px 25px;
     border-radius: 5px;
     margin-bottom: 10px;
-    border-color: #80AF81;
+    border-color: #3B3030;
 }
 .filter-btn:hover{
-    background-color:#1A5319;
+    background-color: #795757;
     color: white;
+    border-color: white;
 }
 .btn {
     max-width: 150px; /* Set a max width for the button */

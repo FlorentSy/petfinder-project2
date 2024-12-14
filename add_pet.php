@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="category" class="form-label">Category</label>
             <select class="form-select" id="category" name="category" required>
                 <option value="">Select Category</option>
-                <option value="Dog">Dog</option>
-                <option value="Cat">Cat</option>
-                <option value="Others">Others</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="others">Others</option>
             </select>
         </div>
         <div class="col-md-4">
