@@ -143,35 +143,54 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     <?php endif; ?>
 
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-        <?php foreach ($pets as $pet): ?>
-            <div class="col">
-                <div class="card h-100 shadow-sm hover-shadow transition">
-                    <?php if (!empty($pet['image'])): ?>
-                        <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
-                             class="card-img-top" 
-                             alt="<?php echo htmlspecialchars($pet['name']); ?>"
-                             style="height: 250px; object-fit: cover;">
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title d-flex justify-content-between align-items-center">
-                            <?php echo htmlspecialchars($pet['name']); ?>
-                            <span class="badge-btn <?php echo strtolower($pet['category']) === 'cat' ? 'cat-badge' : 'dog-badge'; ?>">
-                                <?php echo htmlspecialchars($pet['age']); ?> years
-                            </span>
-                        </h5>
-                        <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
-                        <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
-                    </div>
-                    <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
-                        <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
-                           class="adoptbtn1 <?php echo strtolower($pet['category']) === 'cat' ? 'cat-btn' : 'dog-btn'; ?>">
-                           Adopt <?php echo htmlspecialchars($pet['name']); ?>
-                        </a>
-                    </div>
+    <?php foreach ($pets as $pet): ?>
+        <div class="col">
+            <div class="card h-100 shadow-sm hover-shadow transition">
+                <?php if (!empty($pet['image'])): ?>
+                    <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
+                         class="card-img-top" 
+                         alt="<?php echo htmlspecialchars($pet['name']); ?>" 
+                         style="height: 250px; object-fit: cover;">
+                <?php endif; ?>
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between align-items-center">
+                        <?php echo htmlspecialchars($pet['name']); ?>
+                        <span class="badge-btn 
+                            <?php 
+                                if (strtolower($pet['category']) === 'cat') {
+                                    echo 'cat-badge';
+                                } elseif (strtolower($pet['category']) === 'dog') {
+                                    echo 'dog-badge';
+                                } else {
+                                    echo 'others-badge'; // New class for "Other Pets"
+                                }
+                            ?>">
+                            <?php echo htmlspecialchars($pet['age']); ?> years
+                        </span>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
+                    <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
+                    <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
+                       class="adoptbtn1 
+                       <?php 
+                           if (strtolower($pet['category']) === 'cat') {
+                               echo 'cat-btn';
+                           } elseif (strtolower($pet['category']) === 'dog') {
+                               echo 'dog-btn';
+                           } else {
+                               echo 'others-btn'; // New button class for "Other Pets"
+                           }
+                       ?>">
+                       Adopt <?php echo htmlspecialchars($pet['name']); ?>
+                    </a>
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
 
     <?php if (empty($pets)): ?>
         <div class="alert alert-info text-center" role="alert">
@@ -309,6 +328,32 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     margin-bottom: 10px;
     font-size: 14px;
 }
+/* Other pets styles */
+.others-badge {
+    text-decoration: none;
+    color: white;
+    background-color: #795757;
+    padding: 5px 7px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.others-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #3B3030;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1.5px solid white;
+    font-size: 17px;
+}
+
+.others-btn:hover {
+    background-color: #795757;
+    color: white;
+}
+
 
 /* Hover effects */
 .adoptbtn1.cat-btn:hover {

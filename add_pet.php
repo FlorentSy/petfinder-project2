@@ -52,7 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     default => 'index.php', // Fallback in case of an unmatched category
                                 };
                                 ?>
-                                <a href="<?php echo $redirectPage; ?>" class="btn btn-info">View <?php echo htmlspecialchars($pet['category']); ?>s</a>
+                              <a href="<?php echo $redirectPage; ?>" 
+                                style="background-color: #ff5722; color: white; padding: 10px 20px; border: 2px solid #d84315; border-radius: 8px; text-decoration: none; display: inline-block;" 
+                                class="btn" 
+                                onmouseover="this.style.backgroundColor='#d84315'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" 
+                                onmouseout="this.style.backgroundColor='#ff5722'; this.style.boxShadow='none';">
+                                View <?php echo htmlspecialchars($pet['category']); ?>s
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -103,6 +109,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 <style>
+    .btn:hover{
+        background-color: black;
+         color: #fff;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
     .addpetbtn{
     text-decoration: none;
     color: white;
@@ -110,11 +122,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     padding: 10px 20px;
     border-radius: 5px;
     border-color:white;
-}
-.addpetbtn:hover{
-    background-color: #6A9AB0;
-    color: white;
-}
+    }
+    .addpetbtn:hover{
+        background-color: #6A9AB0;
+        color: white;
+    }
+
     
 </style>
 <?php
