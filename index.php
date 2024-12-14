@@ -61,13 +61,13 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
         </div>
         <div class="col-md-4">
             <a href="cats.php" class="category-box2">
-            <img class="category-icon" src="catlogo3.png" alt="Cat Icon">
+            <img class="category-icon2" src="caticon.png" alt="Cat Icon">
                 <h3>Cats</h3>
             </a>
         </div>
         <div class="col-md-4">
-            <a href="otherpets.php" class="category-box">
-                <i class="category-icon">🐾</i>
+            <a href="otherpets.php" class="category-box2">
+             <img class="category-icon2" src="othersicon.png" alt="Others Icon">
                 <h3>Other Animals</h3>
             </a>
         </div>
@@ -201,7 +201,13 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     font-size: 48px;
     margin-bottom: 10px;
 }
-
+.category-icon2 {
+    width: 150px; /* Adjust as needed */
+    height: 150px;
+    object-fit: contain; /* Ensures the image fits within the given dimensions */
+    font-size: 48px;
+    margin-bottom: 10px;
+}
 .category-box {
     display: block;
     background-color: #f1f1f1;

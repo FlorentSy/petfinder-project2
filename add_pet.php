@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $age = (int)$_POST['age'];
     $description = sanitizeInput($_POST['description']);
     $image = sanitizeInput($_POST['image']);
-    $category = sanitizeInput($_POST['category']); // New category input
+    $category = strtolower(sanitizeInput($_POST['category'])); // Store as lowercase
 
     $stmt = $pdo->prepare("INSERT INTO pets (name, breed, age, description, image, category, available) VALUES (?, ?, ?, ?, ?, ?, 1)");
     $stmt->execute([$name, $breed, $age, $description, $image, $category]);
@@ -45,10 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="text-center">
                                 <?php 
                                 // Redirect to appropriate page based on category
-                                $redirectPage = match(strtolower($pet['category'])) {
+                                $redirectPage = match(($pet['category'])) {
                                     'cat' => 'cats.php',
                                     'dog' => 'dogs.php',
-                                    default => 'index.php'
+                                    'others' => 'otherpets.php',
+                                    default => 'index.php', // Fallback in case of an unmatched category
                                 };
                                 ?>
                                 <a href="<?php echo $redirectPage; ?>" class="btn btn-info">View <?php echo htmlspecialchars($pet['category']); ?>s</a>
