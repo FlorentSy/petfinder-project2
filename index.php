@@ -172,7 +172,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
                 </div>
                 <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
-                    <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
+                    <a href="pet_details.php?id=<?php echo $pet['id']; ?>" 
                        class="adoptbtn1 
                        <?php 
                            if (strtolower($pet['category']) === 'cat') {
