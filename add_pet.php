@@ -7,13 +7,14 @@ require 'header.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitizeInput($_POST['name']);
     $breed = sanitizeInput($_POST['breed']);
+    $gender = sanitizeInput($_POST['gender']);
     $age = (int)$_POST['age'];
     $description = sanitizeInput($_POST['description']);
     $image = sanitizeInput($_POST['image']);
     $category = strtolower(sanitizeInput($_POST['category'])); // Store as lowercase
 
-    $stmt = $pdo->prepare("INSERT INTO pets (name, breed, age, description, image, category, available) VALUES (?, ?, ?, ?, ?, ?, 1)");
-    $stmt->execute([$name, $breed, $age, $description, $image, $category]);
+    $stmt = $pdo->prepare("INSERT INTO pets (name, breed, gender, age, description, image, category, available) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
+    $stmt->execute([$name, $breed, $gender, $age, $description, $image, $category]);
 
     // Fetch the newly added pet
     $newPetId = $pdo->lastInsertId();
@@ -38,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <h5 class="card-title"><?php echo htmlspecialchars($pet['name']); ?></h5>
                             <p class="card-text">
                                 <strong>Breed:</strong> <?php echo htmlspecialchars($pet['breed']); ?><br>
+                                <strong>Gender:</strong> <?php echo htmlspecialchars($pet['gender']); ?><br>
                                 <strong>Age:</strong> <?php echo htmlspecialchars($pet['age']); ?> years<br>
                                 <strong>Description:</strong> <?php echo htmlspecialchars($pet['description']); ?><br>
                                 <strong>Category:</strong> <?php echo htmlspecialchars($pet['category']); ?>
@@ -79,6 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-6">
             <label for="breed" class="form-label">Breed</label>
             <input type="text" class="form-control" id="breed" name="breed" required>
+        </div>
+        <div class="col-md-4">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" id="gender" name="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
         </div>
         <div class="col-md-4">
             <label for="age" class="form-label">Age</label>

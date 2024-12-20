@@ -36,73 +36,71 @@ switch(strtolower($pet['category'])) {
 ?>
 
 <div class="container my-5">
-    <div class="row">
-        <!-- Pet Image Column -->
-        <div class="col-md-6">
-            <div class="pet-image-container">
-                <?php if (!empty($pet['image'])): ?>
-                    <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
-                         alt="<?php echo htmlspecialchars($pet['name']); ?>"
-                         class="img-fluid rounded shadow">
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <!-- Pet Details Column -->
-        <div class="col-md-6">
-            <div class="pet-details-container">
-                <h1 class="mb-3"><?php echo htmlspecialchars($pet['name']); ?></h1>
-                
-                <div class="mb-4">
-                    <span class="badge-btn <?php echo $badgeClass; ?>">
-                        <?php echo htmlspecialchars($pet['age']); ?> years
-                    </span>
-                    <span class="badge bg-secondary ms-2"><?php echo htmlspecialchars($pet['category']); ?></span>
-                </div>
-
-                <h5 class="breed-title">Breed</h5>
-                <p class="mb-4"><?php echo htmlspecialchars($pet['breed']); ?></p>
-
-                <h5 class="description-title">About <?php echo htmlspecialchars($pet['name']); ?></h5>
-                <p class="mb-4"><?php echo htmlspecialchars($pet['description']); ?></p>
-
-                <!-- Additional Pet Details -->
-                <div class="pet-characteristics mb-4">
-                    <h5>Characteristics</h5>
-                    <div class="row">
-                        <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-paw"></i> Gender: <?php echo htmlspecialchars($pet['gender'] ?? 'Not specified'); ?></li>
-                                <li><i class="fas fa-weight"></i> Size: <?php echo htmlspecialchars($pet['size'] ?? 'Not specified'); ?></li>
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-heart"></i> Temperament: <?php echo htmlspecialchars($pet['temperament'] ?? 'Not specified'); ?></li>
-                                <li><i class="fas fa-home"></i> House Trained: <?php echo htmlspecialchars($pet['house_trained'] ?? 'Not specified'); ?></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Adoption Button -->
-                <div class="text-center">
-                    <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
-                       class="adoptbtn1 <?php echo $buttonClass; ?>">
-                       Adopt <?php echo htmlspecialchars($pet['name']); ?>
-                    </a>
-                </div>
-            </div>
+<div class="row d-flex align-items-stretch"> <div class="col-md-6">
+        <div class="pet-image-container"> <?php if (!empty($pet['image'])): ?>
+                <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
+                     alt="<?php echo htmlspecialchars($pet['name']); ?>"
+                     class="img-fluid rounded shadow h-100 w-auto object-fit-cover" style="width: 100%; height: 640px; object-fit: cover;"> <?php endif; ?>
         </div>
     </div>
+    <div class="col-md-6 d-flex flex-column"> <div class="pet-details-container flex-grow-1"> <h1 class="mb-3"><?php echo htmlspecialchars($pet['name']); ?></h1>
+            <div class="mb-4">
+                <span class="badge-btn <?php echo $badgeClass; ?>">
+                    <?php echo htmlspecialchars($pet['age']); ?> years
+                </span>
+                <span class="badge bg-secondary ms-2"><?php echo htmlspecialchars($pet['category']); ?></span>
+            </div>
+            <h5 class="breed-title">Breed</h5>
+            <p class="mb-4"><?php echo htmlspecialchars($pet['breed']); ?></p>
+            <h5 class="description-title">About <?php echo htmlspecialchars($pet['name']); ?></h5>
+            <p class="mb-4"><?php echo htmlspecialchars($pet['description']); ?></p>
+            <div class="pet-characteristics mb-4">
+                <h5>Characteristics</h5>
+                <div class="characteristics-grid"> <div class="characteristic">
+                        <i class="fas fa-paw"></i> Gender: <?php echo htmlspecialchars($pet['gender'] ?? 'Not specified'); ?>
+                    </div>
+                    <div class="characteristic">
+                        <i class="fas fa-weight"></i> Size: <?php echo htmlspecialchars($pet['size'] ?? 'Not specified'); ?>
+                    </div>
+                    <div class="characteristic">
+                        <i class="fas fa-heart"></i> Temperament: <?php echo htmlspecialchars($pet['temperament'] ?? 'Not specified'); ?>
+                    </div>
+                    <div class="characteristic">
+                        <i class="fas fa-home"></i> House Trained: <?php echo htmlspecialchars($pet['house_trained'] ?? 'Not specified'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-auto"> <a href="adopt.php?id=<?php echo $pet['id']; ?>" class="adoptbtn1 <?php echo $buttonClass; ?>"> Adopt <?php echo htmlspecialchars($pet['name']); ?> </a> </div>
+           
+        </div>
+      </div>
+</div>
 </div>
 
 <style>
-.pet-image-container img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    align-items: stretch; /* Stretch items to equal height */
 }
+
+.pet-image-container {
+    display: flex; /* Center align the image inside the container if needed */
+    justify-content: center;
+    align-items: center;
+    height: 600px; /* Match the specified image height */
+    overflow: hidden; /* Hide overflow in case of mismatched sizes */
+    border-radius: 10px; /* Optional: round the container edges */
+    background-color:rgba(245, 245, 245, 0.17); /* Optional: set a placeholder background color */
+}
+.pet-image-container img {
+    height: 400px; /* Set the specific height you want */
+    width: 100%; /* Automatically adjust the width to maintain aspect ratio */
+    object-fit: cover; /* Crop the image to fill the container */
+    border-radius: 10px; /* Optional: round the corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Optional: add shadow for a nice effect */
+}
+
 
 .pet-details-container {
     padding: 20px;
@@ -116,19 +114,36 @@ switch(strtolower($pet['category'])) {
     margin-bottom: 10px;
 }
 
+/* ... other styles ... */
+
 .pet-characteristics {
     background-color: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
 }
 
-.pet-characteristics i {
-    margin-right: 10px;
-    color: #666;
+.pet-characteristics h5 { /* Style for the Characteristics heading */
+    margin-bottom: 15px; /* Add some space below the heading */
 }
 
-.pet-characteristics li {
-    margin-bottom: 10px;
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+    grid-gap: 10px; /* Spacing between grid items */
+}
+
+.characteristic {
+    display: flex; /* Use flexbox for icon alignment */
+    align-items: center; /* Vertically center icon and text */
+    margin-bottom: 5px; /* Add a little space below each characteristic */
+}
+
+.characteristic i {
+    margin-right: 10px;
+    color: #666;
+    font-size: 1.2em; /* Slightly larger icons */
+    width: 20px; /* Fixed width for consistent alignment */
+    text-align: center; /* Center the icon within its width */
 }
 
 .adoptbtn1 {
@@ -139,7 +154,7 @@ switch(strtolower($pet['category'])) {
     text-transform: uppercase;
     margin-top: 20px;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 30px;
 }
 
 /* Maintain existing button styles */

@@ -5,6 +5,7 @@ require 'header.php';
 
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : '';
 $breed_filter = isset($_GET['breed']) ? sanitizeInput($_GET['breed']) : '';
+$gender_filter = isset($_GET['gender']) ? sanitizeInput($_GET['gender']) : '';
 $age_filter = isset($_GET['age']) ? sanitizeInput($_GET['age']) : '';
 
 // Build the query with filters
@@ -20,6 +21,11 @@ if (!empty($search)) {
 if (!empty($breed_filter)) {
     $query .= " AND breed = ?";
     $params[] = $breed_filter;
+}
+
+if (!empty($gender_filter)) {
+    $query .= " AND gender = ?";
+    $params[] = $gender_filter;
 }
 
 if (!empty($age_filter)) {
@@ -40,6 +46,15 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Get unique breeds for filter
 $breed_stmt = $pdo->query("SELECT DISTINCT breed FROM pets WHERE available = 1");
 $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Get unique genders for filter
+$gender_stmt = $pdo->query("SELECT DISTINCT gender FROM pets WHERE available = 1");
+$genders = $gender_stmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Get unique ages for filter
+$age_stmt = $pdo->query("SELECT DISTINCT age FROM pets WHERE available = 1");
+$ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
+
 ?>
 
 <!-- Hero Section -->
@@ -75,6 +90,17 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                     </select>
                 </div>
                 <div class="col-md-2">
+                    <select name="gender" class="form-select">
+                        <option value="">All Genders</option>
+                        <?php foreach ($genders as $gender): ?>
+                            <option value="<?php echo $gender; ?>"
+                                <?php echo $gender_filter === $gender ? 'selected' : ''; ?>>
+                                <?php echo $gender; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-2">
                     <select name="age" class="form-select">
                         <option value="">All Ages</option>
                         <?php for($i = 0; $i <= 15; $i++): ?>
@@ -100,7 +126,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 <div class="container" id="available-pets">
     <h2 class="text-center mb-4">Available Pets</h2>
     
-    <?php if (!empty($search) || !empty($breed_filter) || !empty($age_filter)): ?>
+    <?php if (!empty($search) || !empty($breed_filter) || !empty($gender_filter) || !empty($age_filter)): ?>
         <div class="mb-4 text-center">
             <h5>
                 <?php echo count($pets); ?> pets found
@@ -128,10 +154,11 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                             <span class="badge-btn"><?php echo htmlspecialchars($pet['age']); ?> years</span>
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['gender']); ?></h6>
                         <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
                     </div>
                     <div class="card-footer bg-transparent border-top-0 text-center " style="margin-bottom: 10px;;">
-                        <a href="adopt.php?id=<?php echo $pet['id']; ?>" 
+                        <a href="pet_details.php?id=<?php echo $pet['id']; ?>" 
                            class="adoptbtn1">Adopt <?php echo htmlspecialchars($pet['name']); ?></a>
                     </div>
                 </div>
@@ -176,12 +203,15 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     color: white;
     background-color: #3B3030;
     padding: 10px 25px;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-bottom: 10px;
     font-weight: 500;
     font-size: 17px;
 }
-
+.adoptbtn1:hover{
+    background-color: #795757;
+    color: white;
+}
 .hover-shadow:hover {
     transform: translateY(-5px);
     transition: transform 0.3s ease-in-out;
@@ -190,7 +220,7 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 .badge-btn{
     text-decoration: none;
     color: white;
-    background-color: #795757;
+    background-color:rgba(121, 87, 87);
     padding: 5px 7px;
     border-radius: 5px;
     margin-bottom: 10px;
