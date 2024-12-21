@@ -9,7 +9,7 @@ $message = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Required fields validation
-        $required_fields = ['name', 'breed', 'gender', 'age', 'category'];
+        $required_fields = ['name', 'breed', 'gender', 'yes_no', 'age', 'category'];
         foreach ($required_fields as $field) {
             if (empty($_POST[$field])) {
                 throw new Exception("$field is required");
@@ -20,6 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = sanitizeInput($_POST['name']);
         $breed = sanitizeInput($_POST['breed']);
         $gender = sanitizeInput($_POST['gender']);
+        $trained = sanitizeInput($_POST['yes_no']);
+        $health = sanitizeInput($_POST['health']);
+        $adoption_fee = sanitizeInput($_POST['adoption_fee']);
+
+
         $age = filter_var($_POST['age'], FILTER_VALIDATE_INT);
         
         // Optional fields
@@ -34,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Use PDO prepared statement with named parameters
         $stmt = $pdo->prepare("
-            INSERT INTO pets (name, breed, gender, age, description, image, category) 
-            VALUES (:name, :breed, :gender, :age, :description, :image, :category)
+            INSERT INTO pets (name, breed, gender, age, yes_no, health, adoption_fee, description, image, category) 
+            VALUES (:name, :breed, :gender, :age, :yes_no, :health, :adoption_fee, :description, :image, :category)
         ");
 
         $params = [
@@ -43,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':breed' => $breed,
             ':gender' => $gender,
             ':age' => $age,
+            ':yes_no' => $trained,
+            ':health' => $health,
+            ':adoption_fee' => $adoption_fee,
             ':description' => $description,
             ':image' => $image,
             ':category' => $category
@@ -75,11 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo htmlspecialchars($pet['name']); ?></h5>
                                     <p class="card-text">
-                                        <strong>Breed:</strong> <?php echo htmlspecialchars($pet['breed']); ?><br>
-                                        <strong>Gender:</strong> <?php echo htmlspecialchars($pet['gender']); ?><br>
-                                        <strong>Age:</strong> <?php echo htmlspecialchars($pet['age']); ?> years<br>
-                                        <strong>Description:</strong> <?php echo htmlspecialchars($pet['description']); ?><br>
-                                        <strong>Category:</strong> <?php echo htmlspecialchars($pet['category']); ?>
+                                        <span><strong>Breed:</strong> <?php echo htmlspecialchars($pet['breed']); ?></span> <br>
+                                        <span><strong>Gender:</strong> <?php echo htmlspecialchars($pet['gender']); ?></span> <br>
+                                        <span><strong>Age:</strong> <?php echo htmlspecialchars($pet['age']); ?> years</span> <br>
+                                        <span><strong>Category:</strong> <?php echo htmlspecialchars($pet['category']); ?></span>  <br>
+                                        <span><strong>Trained:</strong> <?php echo htmlspecialchars($pet['yes_no']); ?></span> <br>
+                                        <span><strong>Health:</strong> <?php echo htmlspecialchars($pet['health']); ?></span> <br>
                                     </p>
                                     <div class="text-center">
                                         <?php 
@@ -91,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         };
                                         ?>
                                         <a href="<?php echo $redirectPage; ?>" 
-                                           style="background-color: #FF2E63; color: white; padding: 10px 20px; border: 2px solid black; border-radius: 8px; text-decoration: none; display: inline-block;" 
+                                           style="background-color: #795757; color: white; padding: 10px 20px; border: 2px solid #795757; border-radius: 8px; text-decoration: none; display: inline-block;" 
                                            class="btn">
                                             View <?php echo htmlspecialchars($pet['category']); ?>s
                                         </a>
@@ -143,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="col-md-4">
             <label for="age" class="form-label">Age</label>
-            <input type="number" class="form-control" id="age" name="age" min="0" required>
+            <input type="number" class="form-control" id="age" name="age" min="0"  required>
         </div>
         <div class="col-md-4">
             <label for="category" class="form-label">Category</label>
@@ -154,6 +163,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="others">Others</option>
             </select>
         </div>
+        <div class="col-md-4">
+            <label for="yes_no" class="form-label">House Trained</label>
+            <select class="form-select" id="yes_no" name="yes_no" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="health" class="form-label">Health Information</label>
+            <input type="text" class="form-control" id="health" name="health" placeholder="Enter Health Information/Vaccinations" required>
+        </div>
+      <div class="col-md-4">
+            <label for="adoption_fee" class="form-label">Adoption Fee</label>
+            <input type="text" class="form-control" id="adoption_fee" name="adoption_fee" pattern="^\d+$" required>
+            <small class="form-text text-muted">Enter a numeric value only (e.g., 50).</small>
+        </div>
+
         <div class="col-md-4">
             <label for="image" class="form-label">Image URL</label>
             <input type="text" class="form-control" id="image" name="image">
@@ -169,6 +196,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <style>
+    .card-text {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px; /* Adjust spacing between items */
+    }
+
+    .card-text span {
+        display: inline-block;
+    }
     .btn:hover {
         background-color: black !important;
         color: #fff !important;

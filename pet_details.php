@@ -60,14 +60,29 @@ switch(strtolower($pet['category'])) {
                         <i class="fas fa-paw"></i> Gender: <?php echo htmlspecialchars($pet['gender'] ?? 'Not specified'); ?>
                     </div>
                     <div class="characteristic">
-                        <i class="fas fa-weight"></i> Size: <?php echo htmlspecialchars($pet['size'] ?? 'Not specified'); ?>
+                        <i class="fas fa-heart"></i> Health: <?php echo htmlspecialchars($pet['health'] ?? 'Not specified'); ?>
                     </div>
                     <div class="characteristic">
-                        <i class="fas fa-heart"></i> Temperament: <?php echo htmlspecialchars($pet['temperament'] ?? 'Not specified'); ?>
+                        <i class="fas fa-home"></i> House Trained: <?php echo htmlspecialchars($pet['yes_no'] ?? 'Not specified'); ?>
                     </div>
                     <div class="characteristic">
-                        <i class="fas fa-home"></i> House Trained: <?php echo htmlspecialchars($pet['house_trained'] ?? 'Not specified'); ?>
+                        <i class="fas fa-weight"></i> 
+                        Adoption Fee: 
+                        <?php 
+                            if (isset($pet['adoption_fee'])) {
+                                if ($pet['adoption_fee'] === "Free") {
+                                    echo "Free";
+                                } elseif (is_numeric($pet['adoption_fee'])) {
+                                    echo htmlspecialchars($pet['adoption_fee']) . '€';
+                                } else {
+                                    echo htmlspecialchars($pet['adoption_fee']);
+                                }
+                            } else {
+                                echo 'Not specified';
+                            }
+                        ?>
                     </div>
+
                 </div>
             </div>
             <div class="text-center mt-auto"> <a href="adopt.php?id=<?php echo $pet['id']; ?>" class="adoptbtn1 <?php echo $buttonClass; ?>"> Adopt <?php echo htmlspecialchars($pet['name']); ?> </a> </div>

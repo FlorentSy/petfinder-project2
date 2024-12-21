@@ -8,6 +8,8 @@ $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : '';
 $breed_filter = isset($_GET['breed']) ? sanitizeInput($_GET['breed']) : '';
 $gender_filter = isset($_GET['gender']) ? sanitizeInput($_GET['gender']) : '';
 $age_filter = isset($_GET['age']) ? sanitizeInput($_GET['age']) : '';
+$trained_filter = isset($_GET['yes_no']) ? sanitizeInput($_GET['yes_no']) : '';
+$adoption_fee_filter = isset($_GET['adoption_fee']) ? sanitizeInput($_GET['adoption_fee']) : '';
 
 // Build the query with filters
 $query = "SELECT * FROM pets WHERE available = 1";
@@ -30,6 +32,15 @@ if (!empty($gender_filter)) {
 if (!empty($age_filter)) {
     $query .= " AND age = ?";
     $params[] = $age_filter;
+}
+if (!empty($trained_filter)) {
+    $query .= " AND trained = ?";
+    $params[] = $trained_filter;
+}
+
+if (!empty($adoption_fee_filter)) {
+    $query .= " AND adoption_fee = ?";
+    $params[] = $adoption_fee_filter;
 }
 
 $stmt = $pdo->prepare($query);
@@ -128,6 +139,17 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div>
+                    <select name="yes_no" class="form-select">
+                        <option value="">Trained Status</option>
+                        <?php foreach ($trained as $status): ?>
+                            <option value="<?php echo htmlspecialchars($status); ?>"
+                                <?php echo $trained_filter === $status ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($status); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="col-md-2">
                     <select name="age" class="form-select">
                         <option value="">All Ages</option>
@@ -137,6 +159,16 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                                 <?php echo $i; ?> years
                             </option>
                         <?php endfor; ?>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="adoption_fee" class="form-select">
+                        <option value="">All Adoption Fees</option>
+                        <?php 
+                            foreach ($adoption_fee as $fee) {
+                                echo '<option value="' . $fee . '">' . $fee . '</option>';
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -155,7 +187,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
 <div class="container" id="available-pets">
     <h2 class="text-center mb-4">Available Pets</h2>
     
-    <?php if (!empty($search) || !empty($breed_filter)|| !empty($gender_filter) || !empty($age_filter)): ?>
+    <?php if (!empty($search) || !empty($breed_filter) || !empty($gender_filter) || !empty($trained_filter) || !empty($adoption_fee_filter) || !empty($age_filter)): ?>
         <div class="mb-4 text-center">
             <h5>
                 <?php echo count($pets); ?> pets found
@@ -194,6 +226,23 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                         </span>
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($pet['breed']); ?></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"> <?php echo htmlspecialchars($pet['gender']); ?></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"> 
+                            <?php 
+                                if (isset($pet['adoption_fee'])) {
+                                    if ($pet['adoption_fee'] === "Free") {
+                                        echo "Free";
+                                    } elseif (is_numeric($pet['adoption_fee'])) {
+                                        echo htmlspecialchars($pet['adoption_fee']) . '€';
+                                    } else {
+                                        echo htmlspecialchars($pet['adoption_fee']);
+                                    }
+                                } else {
+                                    echo 'Fee Not specified';
+                                }
+                            ?>
+                        </h6>
+
                     <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
                 </div>
                 <div class="card-footer bg-transparent border-top-0 text-center" style="margin-bottom: 10px;">
@@ -293,7 +342,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 .category-box3:hover {
     background-color:white;
-    border: 2px solid #3A6D8C;
+    border: 2px solid #795757;
 }
 
 .pets1-button {
