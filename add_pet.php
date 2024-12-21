@@ -86,8 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <span><strong>Breed:</strong> <?php echo htmlspecialchars($pet['breed']); ?></span> <br>
                                         <span><strong>Gender:</strong> <?php echo htmlspecialchars($pet['gender']); ?></span> <br>
                                         <span><strong>Age:</strong> <?php echo htmlspecialchars($pet['age']); ?> years</span> <br>
-                                        <span><strong>Category:</strong> <?php echo htmlspecialchars($pet['category']); ?></span>  <br>
+                                        <span><strong>Adoption Fee:</strong> <?php 
+                                            if($pet['adoption_fee'] == 0 || strtolower($pet['adoption_fee']) == 'free') {
+                                                echo 'Free';
+                                            } else {
+                                                echo htmlspecialchars($pet['adoption_fee']) . ' €';
+                                            }
+                                        ?>
+                                        </span> <br>
                                         <span><strong>Trained:</strong> <?php echo htmlspecialchars($pet['yes_no']); ?></span> <br>
+                                        <span><strong>Adoption Fee:</strong> <?php echo htmlspecialchars($pet['adoption_fee']); ?></span> <br>
                                         <span><strong>Health:</strong> <?php echo htmlspecialchars($pet['health']); ?></span> <br>
                                     </p>
                                     <div class="text-center">
@@ -100,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         };
                                         ?>
                                         <a href="<?php echo $redirectPage; ?>" 
-                                           style="background-color: #795757; color: white; padding: 10px 20px; border: 2px solid #795757; border-radius: 8px; text-decoration: none; display: inline-block;" 
+                                           style="background-color: #3A6D8C; color: white; padding: 10px 20px; border: 2px solid #3A6D8C; border-radius: 8px; text-decoration: none; display: inline-block;" 
                                            class="btn">
                                             View <?php echo htmlspecialchars($pet['category']); ?>s
                                         </a>
@@ -175,10 +183,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="health" class="form-label">Health Information</label>
             <input type="text" class="form-control" id="health" name="health" placeholder="Enter Health Information/Vaccinations" required>
         </div>
-      <div class="col-md-4">
+        <div class="col-md-4">
             <label for="adoption_fee" class="form-label">Adoption Fee</label>
-            <input type="text" class="form-control" id="adoption_fee" name="adoption_fee" pattern="^\d+$" required>
-            <small class="form-text text-muted">Enter a numeric value only (e.g., 50).</small>
+            <input type="text" class="form-control" id="adoption_fee" name="adoption_fee" pattern="^\d+$|^free$" required>
+            <small class="form-text text-muted">Enter a numeric value only (e.g., 50) or type "free" to indicate no fee.</small>
         </div>
 
         <div class="col-md-4">
@@ -224,5 +232,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         color: white;
     }
 </style>
+<!-- 
+<script>
+    document.getElementById('adoption_fee').addEventListener('input', function() {
+        var input = this.value;
+        if (input.toLowerCase() === 'free') {
+            this.value = 'Free';  // Capitalize "free" as "Free"
+        }
+    });
+</script> -->
 
 <?php require 'footer.php'; ?>

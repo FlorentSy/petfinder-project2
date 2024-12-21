@@ -203,7 +203,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                         <h6 class="card-subtitle mb-2 text-muted"> 
                             <?php 
                                 if (isset($pet['adoption_fee'])) {
-                                    if ($pet['adoption_fee'] === "Free") {
+                                    if ($pet['adoption_fee'] === "free") {
                                         echo "Free";
                                     } elseif (is_numeric($pet['adoption_fee'])) {
                                         echo htmlspecialchars($pet['adoption_fee']) . '€';

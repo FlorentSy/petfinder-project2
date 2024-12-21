@@ -145,7 +145,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="adoption_fee" id="">
+                    <select name="adoption_fee" class="form-select">
                         <option value="">All Adoption Fees</option>
                         <?php 
                             foreach ($adoption_fee as $fee) {
@@ -201,7 +201,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                         <h6 class="card-subtitle mb-2 text-muted"> 
                             <?php 
                                 if (isset($pet['adoption_fee'])) {
-                                    if ($pet['adoption_fee'] === "Free") {
+                                    if ($pet['adoption_fee'] === "free") {
                                         echo "Free";
                                     } elseif (is_numeric($pet['adoption_fee'])) {
                                         echo htmlspecialchars($pet['adoption_fee']) . '€';
