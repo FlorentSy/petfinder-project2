@@ -193,6 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="image" class="form-label">Pet Image</label>
             <input type="file" accept="image/*" class="form-control" id="image" name="image">
             <small class="form-text text-muted">Accepted formats: JPG, PNG, GIF, WebP</small>
+            <p id="error" style="color: red; display: none;">Please select a valid image file!</p>
         </div>
         <div class="col-12">
             <label for="description" class="form-label">Description</label>
