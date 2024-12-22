@@ -16,9 +16,9 @@ $query = "SELECT * FROM pets WHERE available = 1";
 $params = [];
 
 if (!empty($search)) {
-    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR age LIKE ? OR trained LIKE ? OR adoption_fee LIKE ? OR description LIKE ?)";
+    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR age LIKE ? OR yes_no LIKE ? OR adoption_fee LIKE ? OR description LIKE ?)";
     $searchTerm = "%$search%";
-    $params = array_merge($params, [$searchTerm, $searchTerm, $searchTerm]);
+    $params = array_merge($params, [$searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm]); // ERROR HERE
 }
 
 if (!empty($breed_filter)) {
@@ -34,7 +34,7 @@ if (!empty($age_filter)) {
     $params[] = $age_filter;
 }
 if (!empty($trained_filter)) {
-    $query .= " AND trained = ?";
+    $query .= " AND yes_no = ?";  // CORRECT
     $params[] = $trained_filter;
 }
 
@@ -43,29 +43,35 @@ if (!empty($adoption_fee_filter)) {
     $params[] = $adoption_fee_filter;
 }
 
-$stmt = $pdo->prepare($query);
-$stmt->execute($params);
-$pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get unique breeds for filter
 $breed_stmt = $pdo->query("SELECT DISTINCT breed FROM pets WHERE available = 1");
+$breed_stmt->execute();
 $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 // Get unique genders for filter
 $gender_stmt = $pdo->query("SELECT DISTINCT gender FROM pets WHERE available = 1");
+$gender_stmt->execute();
 $genders = $gender_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 // Get unique ages for filter
 $age_stmt = $pdo->query("SELECT DISTINCT age FROM pets WHERE available = 1");
+$age_stmt->execute();
 $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 // Get unique trained status for filter
 $trained_stmt = $pdo->query("SELECT DISTINCT yes_no FROM pets WHERE available = 1");
+$trained_stmt->execute();
 $trained = $trained_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 // Get unique adoption fee status for filter
 $adoption_fee_stmt = $pdo->query("SELECT DISTINCT adoption_fee FROM pets WHERE available = 1");
+$adoption_fee_stmt->execute();
 $adoption_fee = $adoption_fee_stmt->fetchAll(PDO::FETCH_COLUMN);
+
+$stmt = $pdo->prepare($query);
+$stmt->execute($params);
+$pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -158,9 +164,9 @@ $adoption_fee = $adoption_fee_stmt->fetchAll(PDO::FETCH_COLUMN);
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="age" class="form-select">
-                        <option value="">All Ages</option>
-                        <?php for($i = 0; $i <= 15; $i++): ?>
+                        <select name="age" class="form-select">
+                            <option value="">All Ages</option>
+                            <?php for($i = 0; $i <= 15; $i++): ?>
                             <option value="<?php echo $i; ?>"
                                 <?php echo $age_filter === (string)$i ? 'selected' : ''; ?>>
                                 <?php echo $i; ?> years

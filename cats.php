@@ -15,7 +15,7 @@ $query = "SELECT * FROM pets WHERE available = 1 AND LOWER(category) = 'cat'";
 $params = [];
 
 if (!empty($search)) {
-    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR age LIKE ? OR trained LIKE ? OR adoption_fee LIKE ? OR description LIKE ?)";
+    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR age LIKE ? OR yes_no LIKE ? OR adoption_fee LIKE ? OR description LIKE ?)";
     $searchTerm = "%$search%";
     $params = array_merge($params, [$searchTerm, $searchTerm, $searchTerm]);
 }
@@ -36,7 +36,7 @@ if (!empty($age_filter)) {
 }
 
 if (!empty($trained_filter)) {
-    $query .= " AND trained = ?";
+    $query .= " AND yes_no = ?";  // CORRECT
     $params[] = $trained_filter;
 }
 

@@ -36,7 +36,7 @@ if (!empty($age_filter)) {
     $params[] = $age_filter;
 }
 if (!empty($trained_filter)) {
-    $query .= " AND trained = ?";
+    $query .= " AND yes_no = ?";
     $params[] = $trained_filter;
 }
 

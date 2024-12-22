@@ -34,8 +34,9 @@ if (!empty($age_filter)) {
     $query .= " AND age = ?";
     $params[] = $age_filter;
 }
+
 if (!empty($trained_filter)) {
-    $query .= " AND trained = ?";
+    $query .= " AND yes_no = ?";  // CORRECT
     $params[] = $trained_filter;
 }
 
