@@ -57,17 +57,16 @@ switch(strtolower($pet['category'])) {
             <div class="pet-characteristics mb-4">
                 <h5>Characteristics</h5>
                 <div class="characteristics-grid"> <div class="characteristic">
-                        <i class="fas fa-paw"></i> Gender: <?php echo htmlspecialchars($pet['gender'] ?? 'Not specified'); ?>
+                        <i class="fas fa-paw" style="color:#508D4E"></i> Gender: <?php echo htmlspecialchars($pet['gender'] ?? 'Not specified'); ?>
                     </div>
                     <div class="characteristic">
-                        <i class="fas fa-heart"></i> Health: <?php echo htmlspecialchars($pet['health'] ?? 'Not specified'); ?>
+                        <i class="fas fa-heart" style="color: red;"></i> Health: <?php echo htmlspecialchars($pet['health'] ?? 'Not specified'); ?>
                     </div>
                     <div class="characteristic">
-                        <i class="fas fa-home"></i> House Trained: <?php echo htmlspecialchars($pet['yes_no'] ?? 'Not specified'); ?>
+                        <i class="fas fa-home" style="color:#7E60BF"></i> House Trained: <?php echo htmlspecialchars($pet['yes_no'] ?? 'Not specified'); ?>
                     </div>
                     <div class="characteristic">
-                        <i class="fas fa-weight"></i> 
-                        Adoption Fee: 
+                    <i class="fa fa-coins" style="color: #FFD43B;"></i> Adoption Fee: 
                         <?php 
                             if (isset($pet['adoption_fee'])) {
                                 if ($pet['adoption_fee'] === "Free") {
