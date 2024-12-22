@@ -190,8 +190,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="col-md-4">
-            <label for="image" class="form-label">Image URL</label>
+            <label for="image" class="form-label">Pet Image</label>
             <input type="file" accept="image/*" class="form-control" id="image" name="image">
+            <small class="form-text text-muted">Accepted formats: JPG, PNG, GIF, WebP</small>
         </div>
         <div class="col-12">
             <label for="description" class="form-label">Description</label>
@@ -221,20 +222,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   });
 
-  // Display image preview
-  const imagePreview = document.getElementById('imagePreview');
-
-  imageUpload.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        imagePreview.src = e.target.result;
-        imagePreview.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    }
-  });
 </script>
 
 <style>
