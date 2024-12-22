@@ -16,7 +16,7 @@ $query = "SELECT * FROM pets WHERE available = 1";
 $params = [];
 
 if (!empty($search)) {
-    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR description LIKE ?)";
+    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR age LIKE ? OR trained LIKE ? OR adoption_fee LIKE ? OR description LIKE ?)";
     $searchTerm = "%$search%";
     $params = array_merge($params, [$searchTerm, $searchTerm, $searchTerm]);
 }
@@ -59,6 +59,13 @@ $genders = $gender_stmt->fetchAll(PDO::FETCH_COLUMN);
 $age_stmt = $pdo->query("SELECT DISTINCT age FROM pets WHERE available = 1");
 $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
 
+// Get unique trained status for filter
+$trained_stmt = $pdo->query("SELECT DISTINCT yes_no FROM pets WHERE available = 1");
+$trained = $trained_stmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Get unique adoption fee status for filter
+$adoption_fee_stmt = $pdo->query("SELECT DISTINCT adoption_fee FROM pets WHERE available = 1");
+$adoption_fee = $adoption_fee_stmt->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
 
