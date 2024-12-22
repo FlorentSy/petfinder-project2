@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="col-md-4">
             <label for="image" class="form-label">Image URL</label>
-            <input type="text" class="form-control" id="image" name="image">
+            <input type="file" accept="image/*" class="form-control" id="image" name="image">
         </div>
         <div class="col-12">
             <label for="description" class="form-label">Description</label>
@@ -202,6 +202,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </form>
 </div>
+
+<script>
+  const imageUpload = document.getElementById('image');
+  const error = document.getElementById('error');
+
+  imageUpload.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (validImageTypes.includes(file.type)) {
+        error.style.display = 'none'; // Hide error if valid image
+        console.log('Valid image file selected:', file.name);
+      } else {
+        error.style.display = 'block'; // Show error if invalid file
+        imageUpload.value = ''; // Clear the input field
+      }
+    }
+  });
+
+  // Display image preview
+  const imagePreview = document.getElementById('imagePreview');
+
+  imageUpload.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imagePreview.src = e.target.result;
+        imagePreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
 
 <style>
     .card-text {
