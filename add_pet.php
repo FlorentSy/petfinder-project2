@@ -151,6 +151,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" class="form-control" id="breed" name="breed" required>
         </div>
         <div class="col-md-4">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="others">Others</option>
+            </select>
+        </div>
+        <div class="col-md-4">
             <label for="gender" class="form-label">Gender</label>
             <select class="form-select" id="gender" name="gender" required>
                 <option value="">Select Gender</option>
@@ -162,15 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="age" class="form-label">Age</label>
             <input type="number" class="form-control" id="age" name="age" min="0"  required>
         </div>
-        <div class="col-md-4">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select" id="category" name="category" required>
-                <option value="">Select Category</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="others">Others</option>
-            </select>
-        </div>
+     
         <div class="col-md-4">
             <label for="yes_no" class="form-label">House Trained</label>
             <select class="form-select" id="yes_no" name="yes_no" required>
