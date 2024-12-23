@@ -155,8 +155,9 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
       <h1>Congratulations!</h1>
       <p>You've successfully adopted <?php echo $petName; ?>! Thank you for giving them a forever home. We'll be in touch shortly with next steps.</p>
       <div class="buttons">
-        <a href="<?php echo ($category === 'dog') ? 'dogs.php' : (($category === 'cat') ? 'cats.php' : 'otherpets.php'); ?>" class="button">Back to <?php echo ucfirst($category); ?></a>
-        <a href="index.php" class="button">Back to Home</a>
+      <a href="index.php" class="button">Back to Home</a>
+      <a href="<?php echo ($category === 'dog') ? 'dogs.php' : (($category === 'cat') ? 'cats.php' : 'otherpets.php'); ?>" class="button">Back to <?php echo ucfirst($category); ?></a>
+
       </div>
     <?php else: ?>
       <div class="error-icon">❌</div>
