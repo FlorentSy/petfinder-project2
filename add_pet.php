@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         ?>
                                         </span> <br>
                                         <span><strong>Trained:</strong> <?php echo htmlspecialchars($pet['yes_no']); ?></span> <br>
-                                        <span><strong>Adoption Fee:</strong> <?php echo htmlspecialchars($pet['adoption_fee']); ?></span> <br>
+                                        
                                         <span><strong>Health:</strong> <?php echo htmlspecialchars($pet['health']); ?></span> <br>
                     </p>
                     <div class="text-center">
@@ -212,9 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </script>
 
 <style>
-    .form-label{
-
-    }
+    
     .card-text {
         display: flex;
         flex-wrap: wrap;
