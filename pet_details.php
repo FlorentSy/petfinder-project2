@@ -52,8 +52,8 @@ switch(strtolower($pet['category'])) {
             </div>
             <h5 class="breed-title">Breed</h5>
             <p class="mb-4"><?php echo htmlspecialchars($pet['breed']); ?></p>
-            <h5 class="description-title">About <?php echo htmlspecialchars($pet['name']); ?></h5>
-            <p class="mb-4"><?php echo htmlspecialchars($pet['description']); ?></p>
+            <h5 class="description-title">About <?php echo htmlspecialchars($pet['name'] ?? ''); ?></h5>
+            <p class="mb-4"><?php echo htmlspecialchars($pet['description'] ?? ''); ?></p>
             <div class="pet-characteristics mb-4">
                 <h5>Characteristics</h5>
                 <div class="characteristics-grid"> <div class="characteristic">

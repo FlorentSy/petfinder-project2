@@ -214,7 +214,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
                             ?>
                         </h6>
 
-                        <p class="card-text"><?php echo htmlspecialchars($pet['description']); ?></p>
+                        <p class="card-text"><?php echo htmlspecialchars($pet['description'] ?? ''); ?></p>
                     </div>
                     <div class="card-footer bg-transparent border-top-0 text-center " style="margin-bottom: 10px;;">
                         <a href="pet_details.php?id=<?php echo $pet['id']; ?>" 
