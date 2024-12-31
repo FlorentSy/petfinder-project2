@@ -33,7 +33,9 @@ switch(strtolower($pet['category'])) {
         $buttonClass = 'others-btn';
         $badgeClass = 'others-badge';
 }
+
 ?>
+
 
 <div class="container my-5">
 <div class="row d-flex align-items-stretch"> <div class="col-md-6">

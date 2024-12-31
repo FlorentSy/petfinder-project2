@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['logged_in'] = true;
         $_SESSION['user_id'] = $db->lastInsertId();
         $_SESSION['username'] = $username;
-        header("Location: index.php");
+        header("Location: login.php");
         exit;
     } else {
         $error = "Error signing up. Please try again.";

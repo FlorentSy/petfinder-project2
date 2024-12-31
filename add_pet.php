@@ -9,27 +9,39 @@ $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // Handle file upload first
+        // Handle file upload
         $image_path = '';
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $allowed = ['jpg', 'jpeg', 'png', 'gif'];
             $filename = $_FILES['image']['name'];
             $file_ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
             if (!in_array($file_ext, $allowed)) {
-                throw new Exception('Invalid file type. Only JPG, PNG and GIF files are allowed.');
+                throw new Exception('Invalid file type. Only JPG, PNG, and GIF files are allowed.');
+            }
+
+            // Ensure uploads directory exists and is writable
+            if (!is_dir('uploads')) {
+                if (!mkdir('uploads', 0777, true)) {
+                    throw new Exception('Failed to create uploads directory.');
+                }
+            }
+            if (!is_writable('uploads')) {
+                throw new Exception('Uploads directory is not writable.');
             }
 
             // Generate unique filename
-            $new_filename = uniqid() . '.' . $file_ext;
+            $new_filename = uniqid('', true) . '.' . $file_ext;
             $upload_path = 'uploads/' . $new_filename;
 
             // Move the file
             if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
                 $image_path = $upload_path;
             } else {
-                throw new Exception('Failed to upload image.');
+                throw new Exception('Failed to move uploaded file.');
             }
+        } else if (isset($_FILES['image']['error']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            throw new Exception('File upload error. Code: ' . $_FILES['image']['error']);
         }
 
         // Process other form data
@@ -44,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $category = strtolower(sanitizeInput($_POST['category']));
 
         // Insert into database
-        $stmt = $pdo->prepare("
-            INSERT INTO pets (name, breed, gender, age, yes_no, health, adoption_fee, description, image, category) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
+        $stmt = $pdo->prepare(
+            "INSERT INTO pets (name, breed, gender, age, yes_no, health, adoption_fee, description, image, category) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
 
         $stmt->execute([
             $name, $breed, $gender, $age, $trained, $health, 
@@ -67,12 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <?php if (!empty($pet['image'])) : ?>
-                    <img src="uploads/<?php echo htmlspecialchars($pet['image']); ?>"  
-                         class="card-img-top" 
-                         alt="<?php echo htmlspecialchars($pet['name']); ?>"
-                         style="height: 200px; object-fit: cover;">
-                <?php endif;?>
+                    <?php if (!empty($pet['image'])): ?>
+                        <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
+                             class="card-img-top" 
+                             alt="<?php echo htmlspecialchars($pet['name']); ?>"
+                             style="height: 250px; object-fit: cover;">
+                    <?php endif; ?>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo htmlspecialchars($pet['name']); ?></h5>
                     <p class="card-text">
@@ -179,18 +191,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-4">
             <label for="image" class="form-label">Pet Image</label>
             <input type="file" class="form-control" id="image" name="image" accept="image/*">
-            <small class="form-text text-muted">Accepted formats: JPG, PNG, GIF, WebP</small>
-            <p id="error" style="color: red; display: none;">Please select a valid image file!</p>
+            <small class="form-text text-muted">Accepted formats: JPG, PNG, GIF</small>
         </div>
         <div class="col-12">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
         <div class="col-12">
-            <button type="submit" class="addpetbtn">Add Pet</button>
+            <button type="submit" class="btn btn-primary">Add Pet</button>
         </div>
     </form>
 </div>
+
 
 <script>
   const imageUpload = document.getElementById('image');
@@ -246,3 +258,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </style>
 
 <?php require 'footer.php'; ?>
+

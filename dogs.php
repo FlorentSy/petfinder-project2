@@ -16,7 +16,7 @@ $query = "SELECT * FROM pets WHERE available = 1 AND LOWER(category) = 'dog'";
 $params = [];
 
 if (!empty($search)) {
-    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR description LIKE ?)";
+    $query .= " AND (name LIKE ? OR breed LIKE ? OR gender LIKE ? OR age LIKE ? OR yes_no LIKE ? OR adoption_fee LIKE ? OR description LIKE ?)";
     $searchTerm = "%$search%";
     $params = array_merge($params, [$searchTerm, $searchTerm, $searchTerm]);
 }
@@ -79,7 +79,8 @@ $gender_stmt = $pdo->query("SELECT DISTINCT gender FROM pets WHERE available = 1
 $genders = $gender_stmt->fetchAll(PDO::FETCH_COLUMN);
 
 // Get unique ages for filter
-$age_stmt = $pdo->query("SELECT DISTINCT age FROM pets WHERE available = 1");
+$age_stmt = $pdo->query("SELECT DISTINCT age FROM pets WHERE available = 1 AND LOWER(category) = 'dog'");
+$age_stmt->execute();
 $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
@@ -281,7 +282,7 @@ $ages = $age_stmt->fetchAll(PDO::FETCH_COLUMN);
 .badge-btn{
     text-decoration: none;
     color: white;
-    background-color:rgba(128, 175, 129,);
+    background-color: rgba(128, 175, 129);
     padding: 5px 7px;
     border-radius: 5px;
     margin-bottom: 10px;

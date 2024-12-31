@@ -1,28 +1,43 @@
 <?php
 session_start();
+require 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $db = new PDO("mysql:host=localhost;dbname=petfinder", "root", "");
-
-    $query = $db->prepare("SELECT * FROM users WHERE username = ?");
-    $query->execute([$username]);
-    $user = $query->fetch();
-
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['logged_in'] = true;
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        header("Location: index.php");
+    if (empty($username) || empty($password)) {
+        // Consider handling errors without output before redirection
+        // Perhaps using session to pass error messages or similar
+        header("Location: login.php?error=emptyfields");
         exit;
+    }
+
+    $sql = "SELECT * FROM users WHERE username = :username";
+    $query = $pdo->prepare($sql);
+    $query->bindParam(':username', $username);
+    $query->execute();
+
+    if ($query->rowCount() > 0) {
+        $user = $query->fetch();
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+
+            header("Location: index.php");
+            exit;
+        } else {
+            header("Location: login.php?error=incorrectpassword");
+            exit;
+        }
     } else {
-        $error = "Invalid username or password.";
+        header("Location: login.php?error=usernotfound");
+        exit;
     }
 }
 ?>
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -122,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
                     </div>
-                    <button class="btn btn-primary" type="submit">Log In</button>
+                    <button class="btn btn-primary" type="submit" name="submit">Log In</button>
                 </form>
                 <div class="text-center mt-3">
                     <small>Don’t have an account? <a href="signup.php" class="link">Sign Up</a></small>
