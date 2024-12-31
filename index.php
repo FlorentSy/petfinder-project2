@@ -221,7 +221,11 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-    <?php foreach ($pets as $pet): ?>
+    <?php 
+    $maxPets = min(6, count($pets)); // Ensure we don't try to loop beyond the array size
+    for ($i = 0; $i < $maxPets; $i++): 
+        $pet = $pets[$i]; // Access the current pet
+    ?> 
         <div class="col">
             <div class="card h-100 shadow-sm hover-shadow transition">
                 <?php if (!empty($pet['image'])): ?>
@@ -283,7 +287,7 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-    <?php endforeach; ?>
+    <?php endfor; ?>
 </div>
 
 
