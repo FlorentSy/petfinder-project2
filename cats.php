@@ -205,17 +205,18 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
                         <h6 class="card-subtitle mb-2 text-muted"> <?php echo htmlspecialchars($pet['gender']); ?></h6>
                         <h6 class="card-subtitle mb-2 text-muted"> 
                             <?php 
-                                if (isset($pet['adoption_fee'])) {
-                                    if ($pet['adoption_fee'] === "free") {
-                                        echo "Free";
-                                    } elseif (is_numeric($pet['adoption_fee'])) {
-                                        echo htmlspecialchars($pet['adoption_fee']) . '€';
-                                    } else {
-                                        echo htmlspecialchars($pet['adoption_fee']);
-                                    }
+                               if (isset($pet['adoption_fee'])) {
+                                // Explicitly check for the string "free"
+                                if (strtolower(trim($pet['adoption_fee'])) === "free") {
+                                    echo "Free";
+                                } elseif (is_numeric($pet['adoption_fee'])) {
+                                    echo htmlspecialchars($pet['adoption_fee']) . '€';
                                 } else {
-                                    echo 'Not specified';
+                                    echo htmlspecialchars($pet['adoption_fee']);
                                 }
+                            } else {
+                                echo 'Not specified';
+                            }
                             ?>
                         </h6>
 

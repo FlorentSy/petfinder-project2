@@ -206,7 +206,7 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Available Pets Section -->
 <div class="container" id="available-pets">
-    <h2 class="text-center mb-4">Available Pets</h2>
+    <h2 class="text-center mb-4">Featured Pets</h2>
     
     <?php if (!empty($search) || !empty($breed_filter) || !empty($gender_filter) || !empty($trained_filter) || !empty($adoption_fee_filter) || !empty($age_filter)): ?>
         <div class="mb-4 text-center">

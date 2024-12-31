@@ -1,6 +1,6 @@
 <?php
 // add_pet.php
-session_start();
+
 require 'config.php';
 require 'utils.php';
 require 'header.php';
@@ -72,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          class="card-img-top" 
                          alt="<?php echo htmlspecialchars($pet['name']); ?>"
                          style="height: 200px; object-fit: cover;">
-                <?php endif; ?>
+                         
+                <?php endif;?>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo htmlspecialchars($pet['name']); ?></h5>
                     <p class="card-text">
