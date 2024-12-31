@@ -68,11 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-4">
             <div class="card">
                 <?php if (!empty($pet['image'])) : ?>
-                    <img src="<?php echo htmlspecialchars($pet['image']); ?>" 
+                    <img src="uploads/<?php echo htmlspecialchars($pet['image']); ?>"  
                          class="card-img-top" 
                          alt="<?php echo htmlspecialchars($pet['name']); ?>"
                          style="height: 200px; object-fit: cover;">
-                         
                 <?php endif;?>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo htmlspecialchars($pet['name']); ?></h5>
