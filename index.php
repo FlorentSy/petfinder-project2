@@ -1,7 +1,15 @@
 <?php
+session_start();
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+require_once 'header.php';
 require 'config.php';
 require 'utils.php';
-require 'header.php';
+
+
+
 
 // Handle search and filters
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : '';

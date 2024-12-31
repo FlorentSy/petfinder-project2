@@ -1,81 +1,137 @@
-<?php include("header.php"); ?>
+<?php
+session_start();
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-lg">
-                <div class="card-body p-5">
-                    <h1 class="h3 mb-3 text-center fw-bold">Sign In</h1>
-                    <form class="form-login" action="loginLogic.php" method="post">
-                        <div class="mb-3">
-                            <label for="inputUsername" class="form-label">Username</label>
-                            <input type="text" id="inputUsername" class="form-control" placeholder="Enter your username" name="username" required>
-                        </div>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-                        <div class="mb-3">
-                            <label for="inputPassword" class="form-label">Password</label>
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Enter your password" name="password" required>
-                        </div>
+    $db = new PDO("mysql:host=localhost;dbname=petfinder", "root", "");
 
-                        <button class="btn btn-success w-100" type="submit" name="submit">Sign In</button>
-                    </form>
-                    <div class="text-center mt-3">
-                        <small>Don't have an account? <a href="signup.php" class="text-success">Sign Up</a></small>
+    $query = $db->prepare("SELECT * FROM users WHERE username = ?");
+    $query->execute([$username]);
+    $user = $query->fetch();
+
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        header("Location: index.php");
+        exit;
+    } else {
+        $error = "Invalid username or password.";
+    }
+}
+?>
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        .text-center small {
+            margin-top: 10px;
+        }
+
+        .link {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="fas fa-paw text-primary" style="font-size: 3rem;"></i>
+                    <h2 class="text-primary">Welcome Back!</h2>
+                </div>
+                <form action="login.php" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
                     </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Log In</button>
+                </form>
+                <div class="text-center mt-3">
+                    <small>Don’t have an account? <a href="signup.php" class="link">Sign Up</a></small>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<?php include("footer.php"); ?>
-
-<style>
-	body {
-    background-color: #f8f9fa; /* Light background for better contrast */
-}
-
-.card {
-    border: none;
-    border-radius: 10px;
-}
-
-.card-body {
-    padding: 30px;
-}
-
-.btn-success {
-    background-color: green;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-}
-
-.btn-success:hover {
-    background-color: green;
-}
-
-.form-control {
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-    box-shadow: none;
-    transition: border-color 0.2s ease-in-out;
-}
-
-.form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.text-success {
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.text-success:hover {
-    text-decoration: underline;
-}
-</style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

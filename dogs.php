@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'config.php';
 require 'utils.php';
 require 'header.php';
