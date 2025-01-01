@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate password
     if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/", $password)) {
-        $error = "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.";
+        echo "Password must meet security requirements.<br>";
         exit;
     } else {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -28,10 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: login.php?signup=success");
             exit;
         } else {
-            $error = "Error signing up. Please try again.";
+            echo "Error signing up. Please try again.";
+            exit;
         }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

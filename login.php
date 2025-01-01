@@ -4,7 +4,7 @@ require 'config.php';
 
 if (isset($_POST['submit'])) {
     $username = htmlspecialchars($_POST['username']); // Sanitize input
-    $password = htmlspecialchars($_POST['password']); // Sanitize input
+    $password = ($_POST['password']); // Sanitize input
 
     if (empty($username) || empty($password)) {
         header("Location: login.php?error=emptyfields");
@@ -34,6 +34,8 @@ if (isset($_POST['submit'])) {
 
         // Verify password
         if (password_verify($password, $user['password'])) {
+            echo "Password verified successfully!<br>";
+
             // Rehash password if needed
             if (password_needs_rehash($user['password'], PASSWORD_BCRYPT)) {
                 $newHash = password_hash($password, PASSWORD_BCRYPT);
@@ -78,6 +80,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

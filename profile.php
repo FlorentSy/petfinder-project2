@@ -128,7 +128,7 @@ if (isset($_POST['update'])) {
             <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm new password">
         </div>
         <div class="d-flex justify-content-between">
-            <button type="submit" name="update" class="btn btn-success">Update</button>
+            <button type="submit" name="update" class="btn btn-success">Save</button>
             <a href="delete_profile.php" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account?')">Delete</a>
         </div>
     </form>
