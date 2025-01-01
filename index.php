@@ -8,9 +8,6 @@ require_once 'header.php';
 require 'config.php';
 require 'utils.php';
 
-
-
-
 // Handle search and filters
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : '';
 $breed_filter = isset($_GET['breed']) ? sanitizeInput($_GET['breed']) : '';
@@ -90,7 +87,7 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
             <h1 class="display-4 fw-bold mb-4">Find Your Perfect Companion</h1>
             <p class="lead mb-4">Every pet deserves a loving home. Start your journey here.</p>
-            <a href="#available-pets" class="pets1-button">View All Available Pets</a>
+            <a href="#available-pets" class="pets1-button">View Featured Pets</a>
         </div>
     </div>
 </div>

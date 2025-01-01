@@ -72,6 +72,10 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>" href="profile.php">Edit Profile</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $current_page === 'adopted_pets.php' ? 'active' : ''; ?>" href="adopted_pets.php">My Adopted Pets</a>
+                    </li>
                     <?php if ($is_admin == 1): ?>
                     <li class="nav-item">
                             <a class="nav-link <?php echo $current_page === 'users.php' ? 'active' : ''; ?>" href="dashboard.php">Users Dashboard</a>

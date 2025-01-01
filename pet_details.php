@@ -86,7 +86,7 @@ switch(strtolower($pet['category'])) {
 
                 </div>
             </div>
-            <div class="text-center mt-auto"> <a href="adopt.php?id=<?php echo $pet['id']; ?>" class="adoptbtn1 <?php echo $buttonClass; ?>"> Adopt <?php echo htmlspecialchars($pet['name']); ?> </a> </div>
+            <div class="text-center mt-auto"> <a href="adopt_pet.php?id=<?php echo $pet['id']; ?>" class="adoptbtn1 <?php echo $buttonClass; ?>"> Adopt <?php echo htmlspecialchars($pet['name']); ?> </a> </div>
         </div>
       </div>
 </div>
