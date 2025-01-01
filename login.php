@@ -3,30 +3,72 @@ session_start();
 require 'config.php';
 
 if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = htmlspecialchars($_POST['username']); // Sanitize input
+    $password = htmlspecialchars($_POST['password']); // Sanitize input
 
     if (empty($username) || empty($password)) {
         header("Location: login.php?error=emptyfields");
         exit;
     }
 
-    $sql = "SELECT * FROM users WHERE username = :username";
+    // Check login attempts (brute force protection)
+    $sql = "SELECT * FROM login_attempts WHERE username = :username";
+    $query = $pdo->prepare($sql);
+    $query->bindParam(':username', $username);
+    $query->execute();
+    $attempt = $query->fetch();
+
+    if ($attempt && $attempt['attempts'] >= 5 && time() - strtotime($attempt['last_attempt']) < 900) {
+        header("Location: login.php?error=too_many_attempts");
+        exit;
+    }
+
+    // Fetch user by username (case insensitive)
+    $sql = "SELECT * FROM users WHERE LOWER(username) = LOWER(:username)";
     $query = $pdo->prepare($sql);
     $query->bindParam(':username', $username);
     $query->execute();
 
     if ($query->rowCount() > 0) {
         $user = $query->fetch();
+
+        // Verify password
         if (password_verify($password, $user['password'])) {
+            // Rehash password if needed
+            if (password_needs_rehash($user['password'], PASSWORD_BCRYPT)) {
+                $newHash = password_hash($password, PASSWORD_BCRYPT);
+                $sql = "UPDATE users SET password = :password WHERE id = :id";
+                $updatePassword = $pdo->prepare($sql);
+                $updatePassword->bindParam(':password', $newHash);
+                $updatePassword->bindParam(':id', $user['id']);
+                $updatePassword->execute();
+            }
+
+            // Reset login attempts on successful login
+            $sql = "DELETE FROM login_attempts WHERE username = :username";
+            $resetAttempts = $pdo->prepare($sql);
+            $resetAttempts->bindParam(':username', $username);
+            $resetAttempts->execute();
+
+            // Set session variables
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['is_admin'] = $user['is_admin']; // Add is_admin to session
+            $_SESSION['is_admin'] = $user['is_admin'];
 
-            header("Location: index.php");
+            header("Location: index.php?login=success");
             exit;
         } else {
+            // Increment login attempts on incorrect password
+            if (!$attempt) {
+                $sql = "INSERT INTO login_attempts (username, attempts) VALUES (:username, 1)";
+            } else {
+                $sql = "UPDATE login_attempts SET attempts = attempts + 1, last_attempt = CURRENT_TIMESTAMP WHERE username = :username";
+            }
+            $updateAttempts = $pdo->prepare($sql);
+            $updateAttempts->bindParam(':username', $username);
+            $updateAttempts->execute();
+
             header("Location: login.php?error=incorrectpassword");
             exit;
         }
@@ -36,8 +78,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +110,6 @@ if (isset($_POST['submit'])) {
 
         .form-group {
             margin-bottom: 1.5rem;
-            margin-right: 10px;
         }
 
         .form-group label {
@@ -117,6 +156,10 @@ if (isset($_POST['submit'])) {
             text-decoration: underline;
         }
 
+        .alert {
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) {
             .card {
                 width: 90%;
@@ -132,6 +175,33 @@ if (isset($_POST['submit'])) {
                     <i class="fas fa-paw text-primary" style="font-size: 3rem;"></i>
                     <h2 class="text-primary">Welcome Back!</h2>
                 </div>
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger text-center">
+                        <?php
+                        switch($_GET['error']) {
+                            case 'emptyfields':
+                                echo 'Please fill in all fields.';
+                                break;
+                            case 'incorrectpassword':
+                                echo 'Incorrect password.';
+                                break;
+                            case 'usernotfound':
+                                echo 'User not found.';
+                                break;
+                            case 'too_many_attempts':
+                                echo 'Too many failed attempts. Please try again in 15 minutes.';
+                                break;
+                            default:
+                                echo 'An error occurred. Please try again.';
+                        }
+                        ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($_GET['signup']) && $_GET['signup'] == 'success'): ?>
+                    <div class="alert alert-success text-center">
+                        Registration successful! Please log in.
+                    </div>
+                <?php endif; ?>
                 <form action="login.php" method="post">
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -144,7 +214,7 @@ if (isset($_POST['submit'])) {
                     <button class="btn btn-primary" type="submit" name="submit">Log In</button>
                 </form>
                 <div class="text-center mt-3">
-                    <small>Don’t have an account? <a href="signup.php" class="link">Sign Up</a></small>
+                    <small>Don't have an account? <a href="signup.php" class="link">Sign Up</a></small>
                 </div>
             </div>
         </div>

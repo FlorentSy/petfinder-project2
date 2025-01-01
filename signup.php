@@ -1,23 +1,35 @@
 <?php
 session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $password = $_POST['password'];
 
-    $db = new PDO("mysql:host=localhost;dbname=petfinder", "root", "");
-
-    $query = $db->prepare("INSERT INTO users (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)");
-    if ($query->execute([$name, $surname, $username, $email, $password])) {
-        $_SESSION['logged_in'] = true;
-        $_SESSION['user_id'] = $db->lastInsertId();
-        $_SESSION['username'] = $username;
-        header("Location: login.php");
+    // Validate password
+    if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/", $password)) {
+        $error = "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.";
         exit;
     } else {
-        $error = "Error signing up. Please try again.";
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        // Connect to database
+        $db = new PDO("mysql:host=localhost;dbname=petfinder", "root", "");
+
+        // Insert user into database
+        $query = $db->prepare("INSERT INTO users (name, surname, username, email, password, is_admin) VALUES (?, ?, ?, ?, ?, ?)");
+        if ($query->execute([$name, $surname, $username, $email, $hashed_password, 0])) {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['user_id'] = $db->lastInsertId();
+            $_SESSION['username'] = $username;
+
+            header("Location: login.php?signup=success");
+            exit;
+        } else {
+            $error = "Error signing up. Please try again.";
+        }
     }
 }
 ?>
@@ -165,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)"
                             >
                         </div>
-                        <button class="btn btn-success" type="submit">Sign Up</button>
+                        <button class="btn btn-success" type="submit" name="submit">Sign Up</button>
                     </form>
 
                 <div class="text-center mt-3">
