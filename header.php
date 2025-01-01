@@ -3,8 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Get the current page name
+// Get current page name
 $current_page = basename($_SERVER['PHP_SELF']);
+
+// Use is_admin directly from the session
+$is_admin = $_SESSION['is_admin'] ?? 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +24,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
             background-color: #f8f9fa;
         }
 
-        /* Ensure the navbar stays above other elements */
         .navbar {
             background-color: #ffffff;
             position: sticky;
@@ -46,11 +48,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         .nav-link:hover {
             color: #0d6efd;
         }
-
-        /* Adjust hero section to avoid overlapping */
-        .hero-section {
-            margin-top: 4rem; /* Adjust this value to prevent overlap */
-        }
     </style>
 </head>
 <body>
@@ -65,24 +62,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $current_page === 'index.php' ? 'active' : ''; ?>" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>" href="profile.php">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $current_page === 'add_pet.php' ? 'active' : ''; ?>" href="add_pet.php">Add Pet</a>
+                    </li>
+                    <?php if ($is_admin == 1): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $current_page === 'index.php' ? 'active' : ''; ?>" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo $current_page === 'add_pet.php' ? 'active' : ''; ?>" href="add_pet.php">Add Pet</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active' : ''; ?>" href="logout.php">Logout</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo $current_page === 'login.php' ? 'active' : ''; ?>" href="login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php echo $current_page === 'signup.php' ? 'active' : ''; ?>" href="signup.php">Sign Up</a>
+                            <a class="nav-link <?php echo $current_page === 'users.php' ? 'active' : ''; ?>" href="users.php">Users</a>
                         </li>
                     <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active' : ''; ?>" href="logout.php">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>

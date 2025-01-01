@@ -7,8 +7,6 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
 
     if (empty($username) || empty($password)) {
-        // Consider handling errors without output before redirection
-        // Perhaps using session to pass error messages or similar
         header("Location: login.php?error=emptyfields");
         exit;
     }
@@ -24,6 +22,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['is_admin'] = $user['is_admin']; // Add is_admin to session
 
             header("Location: index.php");
             exit;
@@ -37,6 +36,8 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +70,7 @@ if (isset($_POST['submit'])) {
 
         .form-group {
             margin-bottom: 1.5rem;
+            margin-right: 10px;
         }
 
         .form-group label {
@@ -99,14 +101,16 @@ if (isset($_POST['submit'])) {
             font-weight: bold;
             border-radius: 8px;
         }
-
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
         .text-center small {
             margin-top: 10px;
         }
 
         .link {
             text-decoration: none;
-            color: #007bff;
+            color: green;
         }
 
         .link:hover {
