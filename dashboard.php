@@ -59,3 +59,37 @@ $users = $query->fetchAll(PDO::FETCH_ASSOC);
 </div>
 </body>
 </html>
+
+<footer>
+<div class="text-center p-2" style="">
+        © 2025 Copyright:
+        <a class="text-white" href="#"> <strong>Petfinder</strong></a>
+    </div>
+</footer>
+<style>
+  html, body {
+    height: 100%; /* Make sure the html and body cover the full height of the viewport */
+    margin: 0; /* Remove default margin */
+    display: flex;
+    flex-direction: column; /* Organizes content in a column */
+}
+
+body {
+    flex: 1; /* Allows the body to expand to fill available space */
+}
+
+footer {
+    width: 100%; /* Ensures the footer stretches across the full width of the viewport */
+    background-color: #3A6D8C; /* Background color */
+    color: white; /* Text color */
+    text-align: center; /* Centers the text */
+    padding: 1rem 0; /* Padding above and below the content */
+    position: absolute;
+    bottom: 0; /* Sticks to the bottom */
+    left: 0; /* Aligns to the left edge */
+}
+footer a {
+        text-decoration: none;
+        color: white; /* Ensure text color is white or another color based on your design */
+    }
+</style>
