@@ -61,7 +61,7 @@ $users = $query->fetchAll(PDO::FETCH_ASSOC);
 </html>
 
 <footer>
-<div class="text-center p-2" style="">
+<div class="text-center p-2">
         © 2025 Copyright:
         <a class="text-white" href="#"> <strong>Petfinder</strong></a>
     </div>
