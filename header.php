@@ -55,7 +55,7 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="index.php">
+            <a class="navbar-brand fw-bold text" href="index.php" style="color: #3F72AF;">
                 <i class="fas fa-paw"></i> Petfinder
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
