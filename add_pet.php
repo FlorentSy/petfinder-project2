@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Add Pet</button>
+            <button type="submit" class="btn btn-primary" style="background-color: #3A6D8C; border-color: #3A6D8C">Add Pet</button>
         </div>
     </form>
 </div>

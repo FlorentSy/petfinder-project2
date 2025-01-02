@@ -92,7 +92,7 @@ footer {
     background-color: #3A6D8C; /* Background color */
     color: white; /* Text color */
     text-align: center; /* Centers the text */
-    padding: 1rem 0; /* Padding above and below the content */
+    padding: 0.8rem 0; /* Padding above and below the content */
     position: absolute;
     bottom: 0; /* Sticks to the bottom */
     left: 0; /* Aligns to the left edge */
