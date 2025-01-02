@@ -49,7 +49,7 @@ $users = $query->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $user['email']; ?></td>
                     <td><?php echo $user['is_admin'] == 1 ? 'Yes' : 'No'; ?></td>
                     <td>
-                        <a href="update_user.php?id=<?php echo $user['id']; ?>" class="btn btn-primary btn-sm">Update</a>
+                        <a href="update_user.php?id=<?php echo $user['id']; ?>" class="btn btn-success btn-sm">Update</a>
                         <a href="delete_user.php?id=<?php echo $user['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
