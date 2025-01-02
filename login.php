@@ -206,11 +206,11 @@ if (isset($_POST['submit'])) {
                     </div>
                 <?php endif; ?>
                 <form action="login.php" method="post">
-                    <div class="form-group">
+                    <div class="form-group" style="margin-right: 20px;">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-right: 20px;">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
                     </div>
