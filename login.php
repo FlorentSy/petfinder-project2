@@ -142,6 +142,9 @@ if (isset($_POST['submit'])) {
             font-size: 1.1rem;
             font-weight: bold;
             border-radius: 8px;
+            background-color: #3F72AF;
+            color: white;
+            border-color: white;
         }
         .btn-primary:hover {
             transform: scale(1.05);
@@ -175,8 +178,8 @@ if (isset($_POST['submit'])) {
         <div class="card">
             <div class="card-body">
                 <div class="text-center mb-4">
-                    <i class="fas fa-paw text-primary" style="font-size: 3rem;"></i>
-                    <h2 class="text-primary">Welcome Back!</h2>
+                    <i class="fas fa-paw " style="font-size: 3rem; color: #3F72AF"></i>
+                    <h2 class="text" style="color: #3F72AF">Welcome Back!</h2>
                 </div>
                 <?php if (isset($_GET['error'])): ?>
                     <div class="alert alert-danger text-center">
@@ -217,7 +220,7 @@ if (isset($_POST['submit'])) {
                     <button class="btn btn-primary" type="submit" name="submit">Log In</button>
                 </form>
                 <div class="text-center mt-3">
-                    <small>Don't have an account? <a href="signup.php" class="link">Sign Up</a></small>
+                    <small>Don't have an account? <a href="signup.php" class="" style="color:#3F72AF; text-decoration: none">Sign Up</a></small>
                 </div>
             </div>
         </div>

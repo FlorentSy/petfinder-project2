@@ -74,6 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 0.75rem;
             border-radius: 10px;
             transition: transform 0.2s ease;
+            background-color:  #3F72AF;
+            color: white;
+            border-color: white;
         }
 
         .btn-success:hover {
@@ -84,10 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 1.1rem;
         }
 
-        .link {
-            text-decoration: none;
-            color: #28a745;
-        }
 
         .link:hover {
             text-decoration: underline;
@@ -146,8 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="card mx-auto" style="width: 100%; max-width: 500px;">
             <div class="card-body">
                 <div class="text-center mb-4">
-                    <i class="fas fa-paw text-success" style="font-size: 3rem;"></i>
-                    <h2 class="text-success">Create Your Account</h2>
+                    <i class="fas fa-paw" style="font-size: 3rem; color: #3F72AF;"></i>
+                    <h2 class="text" style="color: #3F72AF;">Create Your Account</h2>
                 </div>
                  <form action="signup.php" method="post">
                         <div class="form-group">
@@ -183,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </form>
 
                 <div class="text-center mt-3">
-                    <small>Already have an account? <a href="login.php" class="link">Log In</a></small>
+                    <small>Already have an account? <a href="login.php" class="" style="color:  #3F72AF; text-decoration: none; font-size: 14px">Log In</a></small>
                 </div>
             </div>
         </div>
