@@ -18,7 +18,8 @@
                 </p>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-2 mb-md-0" style="margin-top: 20px;">
+            <div class="col-lg-3 col-md-6 mb-2 mb-md-0" style="margin-top: 7px;">
+            <h5 class="text-uppercase mb-2">Menu</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2">
                         <a href="index.php" class="text-white"><i class="fas fa-paw pe-3"></i>Home</a>
@@ -38,13 +39,14 @@
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-6 mb-2 mb-md-0" style="margin-top: 20px;">
+            <div class="col-lg-3 col-md-6 mb-2 mb-md-0" style="margin-top: 7px;">
+            <h5 class="text-uppercase mb-2">Info</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2">
-                        <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>General information</a>
+                        <a href="general_information.php" class="text-white"><i class="fas fa-paw pe-3"></i>General information</a>
                     </li>
                     <li class="mb-2">
-                        <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>About the Petfinder Project</a>
+                        <a href="petfinder_project.php" class="text-white"><i class="fas fa-paw pe-3"></i>About the Petfinder Project</a>
                     </li>
                     <li class="mb-2">
                         <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Statistic data</a>
@@ -70,27 +72,27 @@
                 </ul>
                 <ul style="list-style: none; display: flex; justify-content: left; padding: 0;">
                     <li>
-                        <a class="text-white px-2" href="#!">
+                        <a class="text-white px-2" href="https://www.facebook.com/">
                             <i class="fab fa-facebook-square social-icon-large"></i>
                         </a>
                     </li>
                     <li>
-                        <a class="text-white px-2" href="#!">
+                        <a class="text-white px-2" href="https://www.instagram.com/">
                             <i class="fab fa-instagram social-icon-large"></i>
                         </a>
                     </li>
                     <li>
-                        <a class="text-white px-2" href="#!">
+                        <a class="text-white px-2" href="https://twitter.com">
                             <i class="fab fa-twitter social-icon-large"></i>
                         </a>
                     </li>
                     <li>
-                        <a class="text-white px-2" href="#!">
+                        <a class="text-white px-2" href="https://www.youtube.com">
                             <i class="fab fa-youtube social-icon-large"></i>
                         </a>
                     </li>
                     <li>
-                        <a class="text-white px-2" href="#!">
+                        <a class="text-white px-2" href="https://www.linkedin.com">
                             <i class="fab fa-linkedin social-icon-large"></i>
                         </a>
                     </li>
