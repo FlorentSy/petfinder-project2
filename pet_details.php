@@ -91,7 +91,12 @@ switch(strtolower($pet['category'])) {
       </div>
 </div>
 </div>
-
+<footer class="footer mt-auto py-3">
+    <div class="text-center p-2">
+        © 2025 Copyright:
+        <a class="text-white" href="#"><strong>Petfinder</strong></a>
+    </div>
+</footer>
 <style>
 .row {
     display: grid;
@@ -100,20 +105,20 @@ switch(strtolower($pet['category'])) {
 }
 
 .pet-image-container {
-    display: flex; /* Center align the image inside the container if needed */
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 600px; /* Match the specified image height */
-    overflow: hidden; /* Hide overflow in case of mismatched sizes */
-    border-radius: 10px; /* Optional: round the container edges */
-    background-color:rgba(245, 245, 245, 0.17); /* Optional: set a placeholder background color */
+    height: 600px; 
+    overflow: hidden;
+    border-radius: 10px;
+    background-color:rgba(245, 245, 245, 0.17);
 }
 .pet-image-container img {
-    height: 400px; /* Set the specific height you want */
-    width: 100%; /* Automatically adjust the width to maintain aspect ratio */
-    object-fit: cover; /* Crop the image to fill the container */
-    border-radius: 10px; /* Optional: round the corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Optional: add shadow for a nice effect */
+    height: 400px;
+    width: 100%;
+    object-fit: cover; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -137,8 +142,8 @@ switch(strtolower($pet['category'])) {
     border-radius: 8px;
 }
 
-.pet-characteristics h5 { /* Style for the Characteristics heading */
-    margin-bottom: 15px; /* Add some space below the heading */
+.pet-characteristics h5 {
+    margin-bottom: 15px; 
 }
 
 .characteristics-grid {
@@ -148,17 +153,17 @@ switch(strtolower($pet['category'])) {
 }
 
 .characteristic {
-    display: flex; /* Use flexbox for icon alignment */
-    align-items: center; /* Vertically center icon and text */
-    margin-bottom: 5px; /* Add a little space below each characteristic */
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; 
 }
 
 .characteristic i {
     margin-right: 10px;
     color: #666;
-    font-size: 1.2em; /* Slightly larger icons */
-    width: 20px; /* Fixed width for consistent alignment */
-    text-align: center; /* Center the icon within its width */
+    font-size: 1.2em; 
+    width: 20px;
+    text-align: center; 
 }
 
 .adoptbtn1 {
@@ -221,6 +226,35 @@ switch(strtolower($pet['category'])) {
     background-color: #795757;
     color: white;
 }
+/* General layout settings */
+html, body {
+    height: 100%; 
+    margin: 0; 
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex-grow: 1;
+}
+
+/* Footer styles */
+footer {
+    background-color: #3A6D8C; 
+    color: white; 
+    text-align: center;
+    padding: 0.7rem 0; 
+    margin-top: auto; 
+}
+
+footer a {
+    text-decoration: none; 
+    color: white; 
+}
+
+footer a:hover {
+    text-decoration: underline; 
+}
 </style>
 
-<?php require 'footer.php'; ?>
+

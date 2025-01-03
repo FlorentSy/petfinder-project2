@@ -486,7 +486,7 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 .add-pet-button:hover {
-    background-color: rgb(0, 31, 63);
+    background-color:rgb(46, 87, 113);
     color: white;
 }
 
