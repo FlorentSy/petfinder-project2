@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .card-body form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Add space between input groups */
+    gap: 15px; 
 }
 
 .form-group {
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .form-control:focus {
-    border-color: #28a745; /* Matches the button color */
+    border-color: #28a745;
     outline: none;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }

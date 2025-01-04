@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 throw new Exception('Invalid file type. Only JPG, PNG, and GIF files are allowed.');
             }
 
-            // Ensure uploads directory exists and is writable
+            //uploads directory exists and is writable
             if (!is_dir('uploads')) {
                 if (!mkdir('uploads', 0777, true)) {
                     throw new Exception('Failed to create uploads directory.');
@@ -213,10 +213,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (file) {
       const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
       if (validImageTypes.includes(file.type)) {
-        error.style.display = 'none'; // Hide error if valid image
+        error.style.display = 'none'; // Hide error if valid
         console.log('Valid image file selected:', file.name);
       } else {
-        error.style.display = 'block'; // Show error if invalid file
+        error.style.display = 'block'; // Show error if invalid
         imageUpload.value = ''; // Clear the input field
       }
     }

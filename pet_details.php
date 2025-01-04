@@ -86,8 +86,13 @@ switch(strtolower($pet['category'])) {
 
                 </div>
             </div>
-            <div class="text-center mt-auto"> <a href="adopt_pet.php?id=<?php echo $pet['id']; ?>" class="adoptbtn1 <?php echo $buttonClass; ?>"> Adopt <?php echo htmlspecialchars($pet['name']); ?> </a> </div>
-        </div>
+            <div class="text-center mt-auto">
+                 <a href="<?= $pet['adoption_fee'] > 0 ? 'checkout.php?id=' . $pet['id'] . '&fee=' . $pet['adoption_fee'] : 'adopt_pet.php?id=' . $pet['id'] ?>" 
+                      class="adoptbtn1 <?= $buttonClass; ?>">
+                    <?= $pet['adoption_fee'] > 0 ? 'Proceed to Checkout' : 'Adopt ' . htmlspecialchars($pet['name']); ?>
+                 </a>
+            </div>
+ </div>
       </div>
 </div>
 </div>

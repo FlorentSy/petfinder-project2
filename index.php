@@ -310,16 +310,16 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Add this CSS to your header or stylesheet -->
 <style>
 .category-icon {
-    width: 150px; /* Adjust as needed */
+    width: 150px; 
     height: 150px;
-    object-fit: contain; /* Ensures the image fits within the given dimensions */
+    object-fit: contain; 
     font-size: 48px;
     margin-bottom: 10px;
 }
 .category-icon2 {
-    width: 150px; /* Adjust as needed */
+    width: 150px; 
     height: 150px;
-    object-fit: contain; /* Ensures the image fits within the given dimensions */
+    object-fit: contain; 
     font-size: 48px;
     margin-bottom: 10px;
 }

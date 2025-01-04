@@ -248,7 +248,6 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     </div>
 </div>
 
-<!-- Add this CSS to your header or stylesheet -->
 <style>
 .pets1-button{
     text-decoration: none;
@@ -314,14 +313,14 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 .hero-section {
-    margin-top: -2rem; /* Adjust based on your header height */
+    margin-top: -2rem; 
 }
-/* Make sure the parent container uses flex */
+
 .filter-container {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Adjust this as needed */
-    gap: 10px; /* Adds spacing between buttons */
+    justify-content: flex-start;
+    gap: 10px;
 }
 .filter-btn{
     text-decoration: none;
@@ -338,23 +337,23 @@ $breeds = $breed_stmt->fetchAll(PDO::FETCH_COLUMN);
     border-color: rgb(210, 112, 232);
 }
 .btn {
-    max-width: 150px; /* Set a max width for the button */
-    white-space: nowrap; /* Prevent text from wrapping */
+    max-width: 150px;
+    white-space: nowrap;
 }
 
 .btn-primary {
-    padding-left: 30px; /* Adds space to the left */
-    padding-right: 30px; /* Adds space to the right */
-    font-size: 16px; /* Optional: Adjust the font size to better fit the button */
-}
-.clear-filters-btn {
-    white-space: nowrap; /* Ensures the text doesn't wrap */
-    font-size: 15px;
-    text-align: left; /* Align text to the left */
-    padding-left: 10px; /* Optional: adjust padding to ensure there's space on the left */
-    padding-right: 10px; /* Optional: adjust padding to control button's width */
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
 }
 
+.clear-filters-btn {
+    white-space: nowrap;
+    font-size: 15px;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 </style>
 

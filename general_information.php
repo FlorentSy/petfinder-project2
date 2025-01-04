@@ -62,7 +62,6 @@ include 'header.php';
 </footer>
 
 <style>
-/* Ensure full-page height and layout flexibility */
 html, body {
     height: 100%;
     margin: 0;
@@ -71,29 +70,31 @@ html, body {
 }
 
 .container {
-    flex-grow: 1; /* Ensures content area takes up available space */
+    flex-grow: 1;
 }
 
 footer {
-    background-color: #3A6D8C; /* Background color */
-    color: white; /* Text color */
-    text-align: center; /* Centers text */
-    padding: 0.7rem 0; /* Padding above and below the content */
-    position: relative; /* Allows footer to move dynamically if content is taller than the viewport */
+    background-color: #3A6D8C;
+    color: white;
+    text-align: center;
+    padding: 0.7rem 0;
+    position: relative;
 }
 
 footer a {
-    text-decoration: none; /* Removes underline */
-    color: white; /* Matches footer text color */
+    text-decoration: none;
+    color: white;
 }
 
 .footer {
-    flex-shrink: 0; /* Keeps footer fixed at the bottom of the page */
+    flex-shrink: 0;
 }
+
 h2 {
-    color:rgb(40, 74, 96);
+    color: rgb(40, 74, 96);
 }
+
 h1 {
-    color:rgb(1, 38, 60);
+    color: rgb(1, 38, 60);
 }
 </style>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'config.php';
-require 'header.php';  // Add this if you have a header file
+require 'header.php'; 
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -11,15 +11,19 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 $stmt = $pdo->prepare("
-    SELECT 
-        pets.*, 
-        adopted_pets.adopt_date 
+    SELECT pets.*, adopted_pets.adopt_date 
     FROM pets
     JOIN adopted_pets ON pets.id = adopted_pets.pet_id
     WHERE adopted_pets.user_id = ?
-    ORDER BY adopted_pets.adopt_date DESC
+    UNION
+    SELECT pets.*, checkouts.created_at AS adopt_date
+    FROM pets
+    JOIN checkouts ON pets.id = checkouts.pet_id
+    WHERE checkouts.user_id = ?
+    ORDER BY adopt_date DESC
 ");
-$stmt->execute([$user_id]);
+
+$stmt->execute([$user_id, $user_id]);
 $adopted_pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -34,7 +38,7 @@ $adopted_pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if (empty($adopted_pets)): ?>
         <div class="alert alert-info">
-            <p class="mb-0">You haven't adopted any pets yet. <a href="index.php">Browse available pets</a></p>
+            <p class="mb-0">You haven't adopted any pets yet. <a href="index.php" style="text-decoration: none; color:rgb(43, 2, 176)">Browse available pets</a></p>
         </div>
     <?php else: ?>
         <div class="row">
@@ -76,29 +80,35 @@ $adopted_pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </footer>
 <style>
-  html, body {
-    height: 100%; /* Make sure the html and body cover the full height of the viewport */
-    margin: 0; /* Remove default margin */
+/* General layout settings */
+html, body {
+    height: 100%; 
+    margin: 0;
     display: flex;
-    flex-direction: column; /* Organizes content in a column */
+    flex-direction: column;
 }
 
-body {
-    flex: 1; /* Allows the body to expand to fill available space */
+
+.container {
+    flex: 1; 
 }
 
+/* Footer styles */
 footer {
-    width: 100%; /* Ensures the footer stretches across the full width of the viewport */
-    background-color: #3A6D8C; /* Background color */
-    color: white; /* Text color */
-    text-align: center; /* Centers the text */
-    padding: 0.8rem 0; /* Padding above and below the content */
-    position: absolute;
-    bottom: 0; /* Sticks to the bottom */
-    left: 0; /* Aligns to the left edge */
+    background-color: #3A6D8C; 
+    color: white; 
+    text-align: center; 
+    padding: 0.8rem 0; 
+    margin-top: auto; 
+    width: 100%; 
 }
+
 footer a {
-        text-decoration: none;
-        color: white; /* Ensure text color is white or another color based on your design */
-    }
+    text-decoration: none;
+    color: white; 
+}
+
+footer a:hover {
+    text-decoration: underline; 
+}
 </style>

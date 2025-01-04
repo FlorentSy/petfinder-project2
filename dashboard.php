@@ -68,28 +68,29 @@ $users = $query->fetchAll(PDO::FETCH_ASSOC);
 </footer>
 <style>
   html, body {
-    height: 100%; /* Make sure the html and body cover the full height of the viewport */
-    margin: 0; /* Remove default margin */
+    height: 100%;
+    margin: 0;
     display: flex;
-    flex-direction: column; /* Organizes content in a column */
+    flex-direction: column;
 }
 
 body {
-    flex: 1; /* Allows the body to expand to fill available space */
+    flex: 1;
 }
 
 footer {
-    width: 100%; /* Ensures the footer stretches across the full width of the viewport */
-    background-color: #3A6D8C; /* Background color */
-    color: white; /* Text color */
-    text-align: center; /* Centers the text */
-    padding: 0.7rem 0; /* Padding above and below the content */
+    width: 100%;
+    background-color: #3A6D8C;
+    color: white;
+    text-align: center;
+    padding: 0.7rem 0;
     position: absolute;
-    bottom: 0; /* Sticks to the bottom */
-    left: 0; /* Aligns to the left edge */
+    bottom: 0;
+    left: 0;
 }
+
 footer a {
-        text-decoration: none;
-        color: white; /* Ensure text color is white or another color based on your design */
-    }
+    text-decoration: none;
+    color: white;
+}
 </style>

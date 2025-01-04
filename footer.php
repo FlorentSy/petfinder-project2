@@ -116,27 +116,31 @@
 </body>
 </html>
 <style>
-  
-    .bg {
-        background-color: #3A6D8C;
-    }
-    .social-icon-large {
-        font-size: 24px; /* You can change this value as needed */
-    }
-    .logo-container {
-        position: relative;
-        left: -50px; /* Adjust as needed to move to the left */
-    }
-    .container.p-3 {
-        padding: 1rem; /* Reduced from default padding provided by p-3 */
-    }
-    .text-center-left {
-      position: relative;
-      left: -40px; /* Adjust as needed to move to the left */; /* Adjust this value to control how far left the text moves */
-    }
-    footer a {
-        text-decoration: none;
-        color: white; /* Ensure text color is white or another color based on your design */
-    }
+  .bg {
+    background-color: #3A6D8C;
+}
+
+.social-icon-large {
+    font-size: 24px;
+}
+
+.logo-container {
+    position: relative;
+    left: -50px;
+}
+
+.container.p-3 {
+    padding: 1rem;
+}
+
+.text-center-left {
+    position: relative;
+    left: -40px;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
 
 </style>
