@@ -126,7 +126,7 @@ if (!$pet) {
             color: white;
             background-color: #508D4E;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
         }
 
@@ -144,13 +144,16 @@ if (!$pet) {
         </div>
         <div class="product-details">
             <h1><?= htmlspecialchars($pet['name']); ?></h1>
-            <p>Adoption Fee: <strong><?= number_format($adoption_fee, 2); ?> €</strong></p>
+            <p>
+                <i class="fa fa-coins" style="color: #FFD43B;"></i> 
+                Adoption Fee: <strong><?= number_format($adoption_fee, 2); ?> €</strong>
+            </p>
         </div>
     </div>
 
     <!-- Payment Section -->
     <div class="payment-section">
-        <h2>Payment Information</h2>
+        <h2 style="color: #508D4E;">Payment Information</h2>
         <form id="checkoutForm" action="process_checkout.php" method="POST">
             <input type="hidden" name="pet_id" value="<?= $pet_id; ?>">
             <input type="hidden" name="adoption_fee" value="<?= $adoption_fee; ?>">

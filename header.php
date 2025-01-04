@@ -47,7 +47,7 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
         }
 
         .nav-link:hover {
-            color: #0d6efd;
+            color:rgb(0, 0, 0);
         }
     </style>
 </head>
