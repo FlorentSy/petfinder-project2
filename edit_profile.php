@@ -7,8 +7,23 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+$error_message = ""; // Initialize error message
+$success_message = ""; // Optional success message
+
+// Fetch user data for the form
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE id = :id";
+$query = $pdo->prepare($sql);
+$query->bindParam(':id', $user_id, PDO::PARAM_INT);
+$query->execute();
+$user = $query->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    $error_message = "User not found.";
+}
+
+// Handle form submission
 if (isset($_POST['update'])) {
-    $user_id = $_SESSION['user_id'];
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $username = $_POST['username'];
@@ -35,14 +50,12 @@ if (isset($_POST['update'])) {
             $query->bindParam(':password', $hashed_password);
             $query->bindParam(':id', $user_id, PDO::PARAM_INT);
             $query->execute();
+            $success_message = "Profile updated successfully!";
         } else {
-            echo "Passwords do not match!";
-            exit();
+            $error_message = "Passwords do not match!";
         }
+    } else {
+        $success_message = "Profile updated successfully!";
     }
-
-    // Redirect to home page after successful update
-    header("Location: index.php");
-    exit();
 }
 ?>

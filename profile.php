@@ -1,11 +1,15 @@
 <?php
 session_start();
 require 'config.php';
+include_once 'header.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+
+$error_message = ""; 
+$success_message = ""; 
 
 // Fetch user data
 $user_id = $_SESSION['user_id'];
@@ -16,11 +20,11 @@ $query->execute();
 $user = $query->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
-    echo "User not found.";
-    exit();
+    $error_message = "User not found.";
 }
 
-if (isset($_POST['update'])) {
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $username = $_POST['username'];
@@ -47,15 +51,13 @@ if (isset($_POST['update'])) {
             $query->bindParam(':password', $hashed_password);
             $query->bindParam(':id', $user_id, PDO::PARAM_INT);
             $query->execute();
+            $success_message = "Profile updated successfully!";
         } else {
-            echo "Passwords do not match!";
-            exit();
+            $error_message = "Passwords do not match!";
         }
+    } else {
+        $success_message = "Profile updated successfully!";
     }
-
-    // Redirect to home page after successful update
-    header("Location: index.php");
-    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -81,26 +83,28 @@ if (isset($_POST['update'])) {
             margin-bottom: 20px;
             text-align: center;
         }
-        .form-label {
-            margin-bottom: 5px;
-        }
-        .btn {
-            width: 100px;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
     </style>
 </head>
 <body>
+
 <div class="form-container">
     <h2>Edit Profile</h2>
-    <form method="post" action="edit_profile.php">
+
+    <!-- Display error message -->
+    <?php if (!empty($error_message)): ?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo htmlspecialchars($error_message); ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Display success message -->
+    <?php if (!empty($success_message)): ?>
+        <div class="alert alert-success" role="alert">
+            <?php echo htmlspecialchars($success_message); ?>
+        </div>
+    <?php endif; ?>
+
+    <form method="post" action="">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required>
@@ -133,6 +137,7 @@ if (isset($_POST['update'])) {
         </div>
     </form>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,39 +1,66 @@
 <?php
 session_start();
+require 'config.php'; // Use the same config file as login.php
+
+// Generate CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
+    $name = trim($_POST['name']);
+    $surname = trim($_POST['surname']);
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Validate password
-    if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/", $password)) {
-        echo "Password must meet security requirements.<br>";
-        exit;
-    } else {
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-        // Connect to database
-        $db = new PDO("mysql:host=localhost;dbname=petfinder", "root", "");
-
-        // Insert user into database
-        $query = $db->prepare("INSERT INTO users (name, surname, username, email, password, is_admin) VALUES (?, ?, ?, ?, ?, ?)");
-        if ($query->execute([$name, $surname, $username, $email, $hashed_password, 0])) {
-            $_SESSION['logged_in'] = true;
-            $_SESSION['user_id'] = $db->lastInsertId();
-            $_SESSION['username'] = $username;
-
-            header("Location: login.php?signup=success");
-            exit;
-        } else {
-            echo "Error signing up. Please try again.";
-            exit;
+    // CSRF token validation
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $error_message = "Invalid CSRF token.";
+    }
+    // Validate input fields
+    else if (empty($name) || empty($surname) || empty($username) || empty($email) || empty($password)) {
+        $error_message = "All fields are required.";
+    }
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Invalid email format.";
+    }
+    else if (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/", $password)) {
+        $error_message = "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character.";
+    }
+    else {
+        try {
+            // Check for duplicate email or username
+            $query = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = :email OR username = :username");
+            $query->bindParam(':email', $email);
+            $query->bindParam(':username', $username);
+            $query->execute();
+            
+            if ($query->fetchColumn() > 0) {
+                $error_message = "Email or username already exists.";
+            } else {
+                // Hash password and insert user
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+                $query = $pdo->prepare("INSERT INTO users (name, surname, username, email, password, is_admin) VALUES (:name, :surname, :username, :email, :password, 0)");
+                $query->bindParam(':name', $name);
+                $query->bindParam(':surname', $surname);
+                $query->bindParam(':username', $username);
+                $query->bindParam(':email', $email);
+                $query->bindParam(':password', $hashed_password);
+                
+                if ($query->execute()) {
+                    // Redirect to login page with success message
+                    header("Location: login.php?signup=success");
+                    exit;
+                } else {
+                    $error_message = "Error signing up. Please try again.";
+                }
+            }
+        } catch (PDOException $e) {
+            $error_message = "Database error. Please try again later.";
         }
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="paw-removebg-preview.png">
     <title>Sign Up</title>
     <style>
         body {
@@ -121,9 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .form-control:focus {
-    border-color: #28a745;
+    border-color: #007bff;
     outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .btn {
@@ -149,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h2 class="text" style="color: #3F72AF;">Create Your Account</h2>
                 </div>
                  <form action="signup.php" method="post">
+                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                         <div class="form-group">
                             <label for="name" class="form-label">First Name</label>
                             <input type="text" id="name" name="name" class="form-control" placeholder="Enter your first name" required>
