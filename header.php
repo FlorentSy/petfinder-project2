@@ -36,7 +36,9 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
         .navbar-brand {
             font-size: 1.5rem;
         }
-
+        .nav-item.active {
+            color: rgb(0, 0, 0);
+        }
         .nav-link {
             font-weight: 500;
         }
@@ -78,7 +80,7 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
                     </li>
                     <?php if ($is_admin == 1): ?>
                     <li class="nav-item">
-                            <a class="nav-link <?php echo $current_page === 'users.php' ? 'active' : ''; ?>" href="dashboard.php">Users Dashboard</a>
+                            <a class="nav-link <?php echo $current_page === 'dashboard.php' ? 'active' : ''; ?>" href="dashboard.php">Users Dashboard</a>
                     </li>
                     <?php endif; ?>
                     <li class="nav-item">

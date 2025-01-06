@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+include_once 'header.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
