@@ -82,6 +82,9 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
                     <li class="nav-item">
                             <a class="nav-link <?php echo $current_page === 'dashboard.php' ? 'active' : ''; ?>" href="dashboard.php">Users Dashboard</a>
                     </li>
+                    <li class="nav-item">
+                            <a class="nav-link <?php echo $current_page === 'pet_dashboard.php' ? 'active' : ''; ?>" href=" pet_dashboard.php">Pets Dashboard</a>
+                    </li>
                     <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active' : ''; ?>" href="logout.php">Logout</a>
