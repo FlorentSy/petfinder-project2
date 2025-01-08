@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="col-md-4">
             <label for="image" class="form-label">Pet Image</label>
             <input type="file" class="form-control" id="image" name="image" accept="image/*">
-            <small class="form-text text-muted">*Max file size: <u>1MB</u></small>
+            <small class="form-text text-muted">*Max file size: <u>2MB</u></small>
             <small class="form-text text-muted">Accepted formats: JPG, PNG, GIF</small>
             
         </div>
