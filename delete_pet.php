@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
 
         // Execute the query
         if ($stmt->execute()) {
-            header('Location: dashboard.php');
+            header('Location: pet_dashboard.php');
             exit;
         } else {
             echo "Error: Unable to delete the pet.";

@@ -71,10 +71,7 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'add_pet.php' ? 'active' : ''; ?>" href="add_pet.php">Add Pet</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>" href="profile.php">Edit Profile</a>
-                    </li>
-
+                    
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'adopted_pets.php' ? 'active' : ''; ?>" href="adopted_pets.php">My Adopted Pets</a>
                     </li>
@@ -86,6 +83,10 @@ $is_admin = $_SESSION['is_admin'] ?? 0;
                             <a class="nav-link <?php echo $current_page === 'pet_dashboard.php' ? 'active' : ''; ?>" href=" pet_dashboard.php">Pets Dashboard</a>
                     </li>
                     <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>" href="profile.php">Edit Profile</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active' : ''; ?>" href="logout.php">Logout</a>
                     </li>
