@@ -124,13 +124,13 @@ if (isset($_POST['submit'])) {
         }
 
         .form-control {
-            width: 100%;
+            width: 98%;
             padding: 0.75rem;
             font-size: 1rem;
             border-radius: 8px;
             border: 1px solid #ced4da;
             transition: border-color 0.3s ease;
-           
+
         }
 
         .form-control:focus {
