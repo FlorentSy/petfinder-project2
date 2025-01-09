@@ -114,6 +114,7 @@ if (isset($_POST['submit'])) {
 
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .form-group label {
@@ -129,6 +130,7 @@ if (isset($_POST['submit'])) {
             border-radius: 8px;
             border: 1px solid #ced4da;
             transition: border-color 0.3s ease;
+           
         }
 
         .form-control:focus {
@@ -147,9 +149,11 @@ if (isset($_POST['submit'])) {
             color: white;
             border-color: white;
         }
+        
         .btn-primary:hover {
             transform: scale(1.05);
         }
+
         .text-center small {
             margin-top: 10px;
         }
@@ -165,6 +169,15 @@ if (isset($_POST['submit'])) {
 
         .alert {
             margin-bottom: 1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 65%;
+            right: 0px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
         }
 
         @media (max-width: 768px) {
@@ -217,6 +230,9 @@ if (isset($_POST['submit'])) {
                     <div class="form-group" style="margin-right: 20px;">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                        <span id="togglePassword" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                     <button class="btn btn-primary" type="submit" name="submit">Log In</button>
                 </form>
@@ -229,5 +245,28 @@ if (isset($_POST['submit'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('mousedown', function (event) {
+            const passwordField = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            // Toggle password visibility
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+            
+            // Keep focus on the password field
+            passwordField.focus();
+
+            // Prevent default behavior
+            event.preventDefault();
+        });
+    </script>
 </body>
 </html>

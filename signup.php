@@ -195,18 +195,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
                         </div>
                         <div class="form-group">
+                        <div class="form-group">
                         <label for="password" class="form-label">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                class="form-control"
-                                placeholder="Create a password"
-                                required
-                                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$"
-                                title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)"
-                            >
-                        </div>
+                            <div class="form-group" style="position: relative;">
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Create a password"
+                                    required
+                                    pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$"
+                                    title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)"
+                                    style="padding-right: 2.5rem; margin-bottom: 0.5rem;"
+                                >
+                                <span
+                                    id="togglePassword"
+                                    style="
+                                        position: absolute;
+                                        top: 42%;
+                                        right: 10px;
+                                        transform: translateY(-50%);
+                                        cursor: pointer;
+                                        color: #6c757d;
+                                    "
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                            </div>
                         <button class="btn btn-success" type="submit" name="submit">Sign Up</button>
                     </form>
 
@@ -219,5 +235,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('mousedown', function (event) {
+            const passwordField = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            // Toggles between password and text
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+            
+            // Keeps the cursor and start writing in the password field
+            passwordField.focus();
+
+            // Prevent button default behavior
+            event.preventDefault();
+        });
+    </script>
+
 </body>
 </html>
